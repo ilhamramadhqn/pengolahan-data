@@ -17,8 +17,6 @@ class ControllerKategoriJurnal extends Controller
     {
         {
             //
-            
-           
             $data = Model_KategoriJurnal::get();
             return view('MasterDataRekap/Jenis_Jurnal.index',compact('data'));
         }
@@ -76,6 +74,8 @@ class ControllerKategoriJurnal extends Controller
     public function edit($id)
     {
         //
+        $data = Model_KategoriJurnal::find($id);
+        return view('MasterDataRekap/Jenis_Jurnal.edit', compact('data'));
     }
 
     /**
@@ -85,9 +85,15 @@ class ControllerKategoriJurnal extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_jenis)
     {
         //
+        $validatedData = $request->validate([
+            'nama_jenis' => 'required'
+        ]);
+        Model_KategoriJurnal::whereid_jenis($id_jenis)->update($validatedData);
+        Alert::success('Data Jenis Jurnal Berhasil Diubah!');
+        return redirect()->route('Jenis-Jurnal.index');
     }
 
     /**
@@ -99,5 +105,9 @@ class ControllerKategoriJurnal extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_KategoriJurnal::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Jenis Jurnal Berhasil Dihapus!');
+        return redirect()->route('Jenis-Jurnal.index');
     }
 }

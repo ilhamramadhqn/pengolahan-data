@@ -74,6 +74,8 @@ class ControllerJenisPublikasi extends Controller
     public function edit($id)
     {
         //
+        $data = Model_JenisPublikasi::find($id);
+        return view('MasterDataRekap/Jenis_Publikasi.edit', compact('data'));
     }
 
     /**
@@ -83,9 +85,15 @@ class ControllerJenisPublikasi extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_jenis_penelitian)
     {
         //
+        $validatedData = $request->validate([
+            'nama_jenis_penelitian' => 'required'
+        ]);
+        Model_JenisPublikasi::whereid_jenis_penelitian($id_jenis_penelitian)->update($validatedData);
+        Alert::success('Data Jenis Publikasi Berhasil Diubah!');
+        return redirect()->route('Jenis-Publikasi.index');
     }
 
     /**
@@ -97,5 +105,9 @@ class ControllerJenisPublikasi extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_JenisPublikasi::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Jenis Publikasi Berhasil Dihapus!');
+        return redirect()->route('Jenis-Publikasi.index');
     }
 }

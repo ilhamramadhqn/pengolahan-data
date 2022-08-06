@@ -11,7 +11,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h4>Ubah Data Fakultas</h4>
+              <h4>Edit Data Fakultas</h4>
             </div>
             <div class="card-body p-0">
               <form method="post" action="{{ route('Fakultas.update', $data->id_fakultas ) }}">

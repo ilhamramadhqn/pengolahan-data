@@ -42,11 +42,10 @@ class ControllerSemester extends Controller
         $add =new Model_Semester();
         $request->validate([
             'tipe_sem' => 'required',
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required'
+            'tahun' => 'required'
         ]);  
         
-        $add->nama_semester=$request['tipe_sem']." ".$request['tahun_awal']."/".$request['tahun_akhir'];
+        $add->nama_semester=$request['tipe_sem']." ".$request['tahun'];
         $add->save();
         Alert::success('Semester Baru Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
@@ -73,6 +72,8 @@ class ControllerSemester extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Semester::find($id);
+        return view('MasterDataRekap/Semester.edit', compact('data'));
     }
 
     /**
@@ -82,9 +83,19 @@ class ControllerSemester extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_semester)
     {
         //
+        $this->validate($request,[
+            'tipe_sem' => 'required',
+            'tahun' => 'required'
+          ]);
+        $update =Model_Semester::where('id_semester',$id_semester)->first();
+        
+        $update->nama_semester=$request['tipe_sem']." ".$request['tahun'];
+        $update->update();
+        Alert::success('Data Semester Berhasil Diubah!');
+        return redirect()->route('Semester.index');
     }
 
     /**
@@ -96,5 +107,9 @@ class ControllerSemester extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Semester::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Semester Berhasil Dihapus!');
+        return redirect()->route('Semester.index');
     }
 }

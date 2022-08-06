@@ -41,7 +41,7 @@
                           <form action="{{ route('Fakultas.destroy', $d->id_fakultas)}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertFunc();" type="submit"><i class="far fa-trash-alt text-white" data-feather="delete" oneclick="yakin?"></i></button>
+                            <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertFunc();" type="submit"><i class="far fa-trash-alt text-white" data-feather="delete"></i></button>
                           </form>
                         </td>
                       </tr>

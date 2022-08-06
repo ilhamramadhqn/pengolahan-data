@@ -41,7 +41,6 @@ class ControllerFakultas extends Controller
     public function create()
     {
         //
-
         return view('MasterDataRekap/Fakultas.tambah');
     }
 

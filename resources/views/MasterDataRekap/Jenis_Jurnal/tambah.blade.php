@@ -20,7 +20,7 @@
 
                   <div class="form-group">
                     <label>Silahkan Masukan Jenis Jurnal</label>
-                    <input type="text" name="nama_jenis" id="nama_jenis" class="form-control" autofocus>
+                    <input type="text" name="nama_jenis" id="nama_jenis" class="form-control" onkeyup="this.value = this.value.toUpperCase();" autofocus>
                     @if ($errors->has('nama_jenis'))
                     <span class="text-danger">{{ $errors->first('nama_jenis') }}</span>
                     @endif

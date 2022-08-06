@@ -11,16 +11,16 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h4>Tambah Data Fakultas</h4>
+              <h4>Tambah Data Jenis Publikasi</h4>
             </div>
             <div class="card-body p-0">
-              <form method="post" action="{{ route('Jenis_Publikasi.store') }}">
+              <form method="post" action="{{ route('Jenis-Publikasi.store') }}">
                 @csrf
                 <div class="card-body">
 
                   <div class="form-group">
                     <label>Silahkan Masukan Nama Jenis Publikasi</label>
-                    <input type="text" name="nama_jenis_penelitian" id="nama_jenis_penelitian" class="form-control" autofocus>
+                    <input type="text" name="nama_jenis_penelitian" id="nama_jenis_penelitian" class="form-control" onkeyup="this.value = this.value.toUpperCase();" autofocus>
                     @if ($errors->has('nama_jenis_penelitian'))
                     <span class="text-danger">{{ $errors->first('nama_jenis_penelitian') }}</span>
                     @endif

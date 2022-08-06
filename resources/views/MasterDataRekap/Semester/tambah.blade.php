@@ -27,15 +27,15 @@
                   </div>
                   <label>Silahkan Masukan Tahun Ajaran</label>
                   <div class="form-group">
-                    <input type="text" name="tahun_awal" id="tahun_awal" class="form-control col-lg-2" autofocus>
-                    @if ($errors->has('tahun_awal'))
-                    <span class="text-danger">{{ $errors->first('tahun_awal') }}</span>
-                    @endif
-                    <input type="text" class="form-control col-lg-1" placeholder="-" disabled>
-                    <input type="text" name="tahun_akhir" id="tahun_akhir" class="form-control col-lg-2">
-                    @if ($errors->has('tahun_akhir'))
-                    <span class="text-danger">{{ $errors->first('tahun_akhir') }}</span>
-                    @endif
+                  <select name="tahun" class="form-control" required>
+                    <option value="">-</option>
+                    <?php
+                    $now = date('Y');
+                    for ($i = $now; $i >= 2000; $i--) {
+                      echo "<option value='".$i."/".($i+1)."'>".$i."/".($i+1)."</option>";
+                    }
+                    ?>
+                  </select>
                   </div>
                   
 

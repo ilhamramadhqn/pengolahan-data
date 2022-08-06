@@ -20,7 +20,7 @@
 
                   <div class="form-group">
                     <label>Silahkan Masukan Kode Program Studi</label>
-                    <input type="text" name="kode_prodi" id="kode_prodi" class="form-control" autofocus>
+                    <input type="text" name="kode_prodi" id="kode_prodi" class="form-control" onkeyup="this.value = this.value.toUpperCase();" autofocus>
                     @if ($errors->has('kode_prodi'))
                     <span class="text-danger">{{ $errors->first('kode_prodi') }}</span>
                     @endif
@@ -36,9 +36,9 @@
                   <div class="form-group">
                     <label>Silahkan Masukan Nama Fakultas</label>
                   <select name="id_fakultas" id="id_fakultas" class="form-control">
-                    <option value="1">FTI - Fakultas Teknik Industri</option>
-                    <option value="2">FSD - Fakultas Senirupa dan Design</option>
-                    <option value="3">FKD - Fakultas Kedokteran</option>
+                  @foreach($fakultas as $f)  
+                    <option value="{{$f->id_fakultas}}">{{$f->kode_fakultas}} - {{$f->nama_fakultas}}</option>
+                  @endforeach
                   </select>
 
                 </div>

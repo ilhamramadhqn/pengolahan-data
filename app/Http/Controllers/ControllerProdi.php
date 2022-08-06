@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Prodi;
+use App\Models\Model_Fakultas;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -16,7 +17,6 @@ class ControllerProdi extends Controller
     public function index()
     {
         //
-        
         $data = Model_Prodi::get();
         return view('MasterDataRekap/Prodi.index',compact('data'));
     }
@@ -29,8 +29,8 @@ class ControllerProdi extends Controller
     public function create()
     {
         //
-
-        return view('MasterDataRekap/Prodi.tambah');
+        $fakultas = Model_Fakultas::get();
+        return view('MasterDataRekap/Prodi.tambah',compact('fakultas'));
     }
 
     /**
@@ -43,7 +43,7 @@ class ControllerProdi extends Controller
     {
         //
         $request->validate([
-            'kode_prodi' => 'required|unique:prodi,kode_prodi|min:2|max:4',
+            'kode_prodi' => 'required|min:2|max:4',
             'nama_prodi' => 'required',
             'id_fakultas' => 'required'
         ]);
@@ -77,8 +77,9 @@ class ControllerProdi extends Controller
     public function edit($id)
     {
         //
-        $prodis = Model_prodi::find($id);
-        return response()->json($prodis);
+        $data = Model_Prodi::find($id);
+        $fakultas = Model_Fakultas::get();
+        return view('MasterDataRekap/Prodi.edit', compact('data','fakultas'));
     }
 
     /**
@@ -88,9 +89,17 @@ class ControllerProdi extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_prodi)
     {
         //
+        $validatedData = $request->validate([
+            'kode_prodi' => 'required|min:2|max:4',
+            'nama_prodi' => 'required',
+            'id_fakultas' => 'required'
+        ]);
+        Model_Prodi::whereid_prodi($id_prodi)->update($validatedData);
+        Alert::success('Data Prodi Berhasil Diubah!');
+        return redirect()->route('Program-Studi.index');
     }
 
     /**
@@ -102,8 +111,9 @@ class ControllerProdi extends Controller
     public function destroy($id)
     {
         //
-        Model_prodi::find($id)->delete();
-     
-        return response()->json(['success'=>'Data deleted successfully.']);
+        $data = Model_Prodi::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Prodi Berhasil Dihapus!');
+        return redirect()->route('Program-Studi.index');
     }
 }
