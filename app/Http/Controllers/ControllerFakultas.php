@@ -87,9 +87,8 @@ class ControllerFakultas extends Controller
      */
     public function edit($id)
     {
-        //
-        $fakultass = Model_Fakultas::find($id);
-        return response()->json($fakultass);
+        $data = Model_Fakultas::find($id);
+        return view('MasterDataRekap/Fakultas.edit', compact('data'));
     }
 
     /**
@@ -99,9 +98,15 @@ class ControllerFakultas extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_fakultas)
     {
-        //
+        $validatedData = $request->validate([
+            'kode_fakultas' => 'required|min:3|max:4',
+            'nama_fakultas' => 'required'
+        ]);
+        Model_Fakultas::whereid_fakultas($id_fakultas)->update($validatedData);
+        Alert::success('Data Fakultas Berhasil Diubah!');
+        return redirect()->route('Fakultas.index');
     }
 
     /**
@@ -112,9 +117,9 @@ class ControllerFakultas extends Controller
      */
     public function destroy($id)
     {
-        //
-        Model_Fakultas::find($id)->delete();
-     
-        return response()->json(['success'=>'Data deleted successfully.']);
+        $data = Model_Fakultas::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Fakultas Berhasil Dihapus!');
+        return redirect()->route('Fakultas.index');
     }
 }

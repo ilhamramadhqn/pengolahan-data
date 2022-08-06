@@ -20,7 +20,7 @@
 
                   <div class="form-group">
                     <label>Silahkan Masukan Kode Fakultas</label>
-                    <input type="text" name="kode_fakultas" id="kode_fakultas" class="form-control" autofocus>
+                    <input type="text" name="kode_fakultas" id="kode_fakultas" class="form-control" onkeyup="this.value = this.value.toUpperCase();" autofocus>
                     @if ($errors->has('kode_fakultas'))
                     <span class="text-danger">{{ $errors->first('kode_fakultas') }}</span>
                     @endif
