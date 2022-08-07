@@ -68,6 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/Pencipta', ControllerPencipta::class);
 
     Route::resource('/Penelitian', ControllerPenelitian::class);
+    Route::patch('/Penelitian/{id_penelitian}/acc', 'App\Http\Controllers\ControllerPenelitian@accept');
+    Route::patch('/Penelitian/{id_penelitian}/dec', 'App\Http\Controllers\ControllerPenelitian@decline');
     Route::resource('/Pengabdian-Masyarakat', ControllerPkm::class);
 
     Route::resource('/Anggota', ControllerAnggota::class);

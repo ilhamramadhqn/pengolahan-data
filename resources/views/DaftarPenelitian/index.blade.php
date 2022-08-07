@@ -63,6 +63,20 @@
                             @method('DELETE')
                             <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertFunc();" type="submit"><i class="far fa-trash-alt text-white" data-feather="delete"></i></button>
                           </form>
+                          @if($d->status == "P")
+                          <form action="Penelitian/{{$d->id_penelitian}}/acc" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <button class="btn btn-icon btn-info btn-sm" onclick="return AllertAcc();" type="submit">Accept</button>
+                          </form>
+                          <form action="Penelitian/{{$d->id_penelitian}}/dec" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertDec();" type="submit">Decline</button>
+                          </form>
+                          @else
+                          @endif
+
                         </td>
                       </tr>
                     @endforeach
@@ -79,6 +93,14 @@
   <script>
   function AllertFunc() {
       if(!confirm("Are You Sure to delete this"))
+      event.preventDefault();
+  }
+  function AllertAcc() {
+      if(!confirm("Are You Sure to accept this"))
+      event.preventDefault();
+  }
+  function AllertDec() {
+      if(!confirm("Are You Sure to decline this"))
       event.preventDefault();
   }
 </script>

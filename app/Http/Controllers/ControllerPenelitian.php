@@ -111,7 +111,7 @@ class ControllerPenelitian extends Controller
     {
         //
     }
-
+  
     /**
      * Show the form for editing the specified resource.
      *
@@ -146,6 +146,25 @@ class ControllerPenelitian extends Controller
         ]);
         Model_Penelitian::whereid_penelitian($id_penelitian)->update($validatedData);
         Alert::success('Data Penelitian Berhasil Diubah!');
+        return redirect()->route('Penelitian.index');
+    }
+
+    public function accept($id_penelitian)
+    {
+        //
+        $acc = Model_Penelitian::where('id_penelitian',$id_penelitian)->first();
+        $acc->status = "T";
+        $acc->update();
+        Alert::success('Data Penelitian Telah Diterima!');
+        return redirect()->route('Penelitian.index');
+    }
+    public function decline($id_penelitian)
+    {
+        //
+        $acc = Model_Penelitian::where('id_penelitian',$id_penelitian)->first();
+        $acc->status = "F";
+        $acc->update();
+        Alert::success('Data Penelitian Telah Ditolak!');
         return redirect()->route('Penelitian.index');
     }
 
