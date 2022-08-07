@@ -14,7 +14,7 @@
               <h4>Tambah Data Penelitian</h4>
             </div>
             <div class="card-body p-0">
-              <form method="post" action="{{ route('Penelitian.store') }}">
+              <form method="post" action="{{ route('Penelitian.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                   <div class="form-group">
@@ -67,13 +67,13 @@
                     <span class="text-danger">{{ $errors->first('file_proposal') }}</span>
                     @endif
                   </div>
-                  <!-- <div class="form-group">
-                    <label>Upload File Jurnal</label>
+                  <div class="form-group">
+                    <label>Upload File Laporan Akhir</label>
                     <input type="file" name="file_laporan_akhir" id="file_laporan_akhir" class="form-control" autofocus>
                     @if ($errors->has('file_laporan_akhir'))
                     <span class="text-danger">{{ $errors->first('file_laporan_akhir') }}</span>
                     @endif
-                  </div> -->
+                  </div>
                 </div>
                 <div class="card-footer text-right">
                   <a href="/Penelitian" class="btn btn-danger">Back</a>

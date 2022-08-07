@@ -7,6 +7,7 @@ use App\Models\Model_Sumber;
 use App\Models\Model_JenisPublikasi;
 use App\Models\Model_Semester;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -46,17 +47,18 @@ class ControllerPenelitian extends Controller
      */
     public function store(Request $request)
     {
+        //
         $add =new Model_Penelitian();
-        $this->validate($request,[
-            'judul_penelitian' => 'required',
+        $request->validate([
             'id_sumber' => 'required',
             'id_jenis_penelitian' => 'required',
             'id_semester' => 'required',
+            'judul_penelitian' => 'required',
             'tahun' => 'required',
             'file_proposal' => 'mimes:doc,docx,pdf',
-
-        ]);
-
+            'file_laporan_akhir' => 'mimes:doc,docx,pdf',
+        ]);  
+        
         if(!$request->file('file_proposal'))
         { 
         $file_NewName="";
@@ -70,17 +72,33 @@ class ControllerPenelitian extends Controller
         }
         $request->file('file_proposal')->move("files/proposal-files/", $file_NewName);
         }
+        
+        if(!$request->file('file_laporan_akhir'))
+        { 
+        $file2_NewName="";
+        }
+        else
+        {
+        $file2Name   = $request->file('file_laporan_akhir')->getClientOriginalName();
+        $file2Ext   = $request->file('file_laporan_akhir')->getClientOriginalExtension();
+        $file2_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$file2Ext;
+        if (is_dir('files/laporan-akhir-files/' . $request['judul_penelitian'])) { } else {
+        }
+        $request->file('file_laporan_akhir')->move("files/laporan-akhir-files/", $file2_NewName);
+        }
 
         $add->file_proposal=$file_NewName;
-        $add->judul_penelitian=$request['judul_penelitian'];
+        $add->file_laporan_akhir=$file2_NewName;
         $add->id_sumber=$request['id_sumber'];
         $add->id_jenis_penelitian=$request['id_jenis_penelitian'];
         $add->id_semester=$request['id_semester'];
+        $add->judul_penelitian=$request['judul_penelitian'];
         $add->tahun=$request['tahun'];
         $add->status='P';
         $add->save();
-        Alert::success('Data Penelitian Berhasil Diubah!');
-        return redirect('Penelitian');
+        Alert::success('Data Penelitian Berhasil Ditambahkan!');
+        //jika data berhasil ditambahkan, akan kembali ke halaman utama
+        return redirect()->route('Penelitian.index');
     }
 
     /**

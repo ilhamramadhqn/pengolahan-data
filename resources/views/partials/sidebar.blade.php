@@ -61,34 +61,34 @@
 
     <li class="menu-header">Daftar Penelitian</li>
     <li class="{{ request()->is('/') ? : '' }}">
-      <a class="nav-link" href="{{ url('/Penelitian') }}"><i class="fas fa-search"></i> <span>Daftar Penelitian</span></a>
+      <a class="nav-link" href="{{ url('/Penelitian') }}"><i class="fas fa-book"></i> <span>Daftar Penelitian</span></a>
     </li>
     <li class="{{ request()->is('/') ? : '' }}">
-      <a class="nav-link" href="{{ url('/Artikel') }}"><i class="fas fa-search"></i> <span>Artikel</span></a>
+      <a class="nav-link" href="{{ url('/Artikel') }}"><i class="fas fa-book"></i> <span>Artikel</span></a>
     </li>
     <li class="{{ request()->is('/') ? : '' }}">
-      <a class="nav-link" href="{{ url('/Jurnal') }}"><i class="fas fa-search"></i> <span>Jurnal</span></a>
+      <a class="nav-link" href="{{ url('/Jurnal') }}"><i class="fas fa-book"></i> <span>Jurnal</span></a>
     </li>
-
+    <li class="{{ request()->is('/') ? : '' }}">
+      <a class="nav-link" href="{{ url('/Pengabdian-Masyarakat') }}"><i class="fas fa-users"></i> <span>Pengabdian Masyarakat</span></a>
+    </li>
+    <li class="{{ request()->is('/') ? : '' }}">
+      <a class="nav-link" href="{{ url('/HKI') }}"><i class="fas fa-list-alt"></i> <span>HKI</span></a>
+    </li>
+<!-- 
     <li class="{{ request()->is('/') ? : '' }}">
       <a class="nav-link" href="{{ url('/Rekapitulasi-penelitian') }}"><i class="fas fa-book"></i> <span>Rekapitulasi Penelitian</span></a>
     </li>
 
     <li class="menu-header">Daftar Pengabdian Masyarakat</li>
     <li class="{{ request()->is('/') ? : '' }}">
-      <a class="nav-link" href="{{ url('/Pengabdian-Masyarakat') }}"><i class="fas fa-users"></i> <span>Pengabdian Masyarakat</span></a>
-    </li>
-    <li class="{{ request()->is('/') ? : '' }}">
       <a class="nav-link" href="{{ url('/Rekapitulasi-pengabdian-masyarakat') }}"><i class="fas fa-book"></i> <span>Rekapitulasi PPM</span></a>
     </li>
 
     <li class="menu-header">Daftar HKI</li>
     <li class="{{ request()->is('/') ? : '' }}">
-      <a class="nav-link" href="{{ url('/HKI') }}"><i class="fas fa-list-alt"></i> <span>HKI</span></a>
-    </li>
-    <li class="{{ request()->is('/') ? : '' }}">
       <a class="nav-link" href="{{ url('/Rekapitulasi-HKIt') }}"><i class="fas fa-book"></i> <span>Rekapitulasi HKI</span></a>
-    </li>
+    </li> -->
 
   </ul>
 </aside>

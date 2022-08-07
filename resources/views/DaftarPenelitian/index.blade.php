@@ -25,13 +25,14 @@
                     <thead>
                       <tr>
                         <th>No</th>
+                        <th>Judul Penelitian</th>
                         <th>Sumber</th>
                         <th>Jenis Penelitian</th>
                         <th>Semester</th>
-                        <th>Judul Penelitian</th>
                         <th>Tahun</th>
                         <th>File Proposal</th>
                         <th>File Laporan Akhir</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -39,13 +40,22 @@
                     @foreach($data as $d)
                       <tr>
                         <td>{{$loop->iteration}}</td>
+                        <td>{{$d->judul_penelitian}}</td>
                         <td>{{$d->sumber->sumber_dana}}</td>
                         <td>{{$d->jenispenelitian->nama_jenis_penelitian}}</td>
                         <td>{{$d->semester->nama_semester}}</td>
-                        <td>{{$d->judul_penelitian}}</td>
                         <td>{{$d->tahun}}</td>
-                        <td>{{$d->file_proposal}}</td> 
-                        <td>{{$d->file_laporan_akhir}}</td>
+                        <td>@if($d->file_proposal != null)<a href="{{ asset('files/proposal-files/' . $d->file_proposal) }}" class="btn btn-outline-info">DOWNLOAD</a>@else - @endif</td> 
+                        <td>@if($d->file_proposal != null)<a href="{{ asset('files/laporan-akhir-files/' . $d->file_laporan_akhir) }}" class="btn btn-outline-info">DOWNLOAD</a>@else - @endif</td>
+                        <td class="text-center">
+                        @if($d->status == "P")
+                        <a class="edit btn btn-icon btn-warning btn-sm align-center">Menunggu Persetujuan</a>
+                        @elseif($d->status == "T")
+                        <a class="edit btn btn-icon btn-success btn-sm align-center">Diterima</a>
+                        @else
+                        <a class="edit btn btn-icon btn-danger btn-sm align-center" >Ditolak</a>
+                        @endif
+                        </td>
                         <td>
                           <a href="Penelitian/{{$d->id_penelitian}}/edit" class="edit btn btn-icon btn-primary btn-sm "><i class="fas fa-edit"></i></a>
                           <form action="{{ route('Penelitian.destroy', $d->id_penelitian)}}" method="post">
