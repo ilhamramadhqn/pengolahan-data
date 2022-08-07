@@ -52,7 +52,7 @@
         <li><a class="nav-link" href="/Dosen"><i class="fa fa-file"></i>Dosen</a></li>
         <li><a class="nav-link" href="/Mahasiswa"><i class="fa fa-file"></i>Mahasiswa</a></li>
         <li><a class="nav-link" href="/Jenis-HKI"><i class="fa fa-file"></i>Jenis HKI</a></li>
-        <li><a class="nav-link" href="/Sumber"><i class="fa fa-file"></i>SumberDana</a></li>
+        <li><a class="nav-link" href="/Sumber"><i class="fa fa-file"></i>Sumber Dana</a></li>
         <li><a class="nav-link" href="/Pelaksana"><i class="fa fa-file"></i>Pelaksana</a></li>
         <li><a class="nav-link" href="/Pencipta"><i class="fa fa-file"></i>Pencipta</a></li>
         <li><a class="nav-link" href="/Penulis"><i class="fa fa-file"></i>Penulis</a></li>

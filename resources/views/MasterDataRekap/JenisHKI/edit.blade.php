@@ -11,7 +11,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h4>Tambah Jenis HKI</h4>
+              <h4>Edit Jenis HKI</h4>
             </div>
             <div class="card-body p-0">
               <form method="post" action="{{ route('Jenis-HKI.update', $data->id_jenis_hki) }}">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-footer text-right">
                   <a href="/Jenis-HKI" class="btn btn-danger">Back</a>
-                  <button type="submit" class="btn btn-success">Submit</button>
+                  <button type="submit" class="btn btn-success">Update</button>
                 </div>
               </form>
 

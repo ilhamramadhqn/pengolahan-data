@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Pelaksana;
+use App\Models\Model_Dosen;
+use App\Models\Model_Mahasiswa;
+use App\Models\Model_Pkm;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -30,7 +33,10 @@ class ControllerPelaksana extends Controller
     public function create()
     {
         //
-        return view('MasterDataRekap/Pelaksana.tambah');
+        $dosen = Model_Dosen::get();
+        $mahasiswa = Model_Mahasiswa::get();
+        $pkm = Model_Pkm::get();
+        return view('MasterDataRekap/Pelaksana.tambah', compact('dosen', 'mahasiswa', 'pkm'));
     }
 
     /**
@@ -43,15 +49,18 @@ class ControllerPelaksana extends Controller
     {
         //
         $request->validate([
-            'nama_jenis_penelitian' => 'required'
+            'id_dosen' => 'required',
+            'id_mhs' => 'required',
+            'id_pkm' => 'required',
+            'no' => 'required'
         ]);
 
         //fungsi eloquent untuk menambah data
         Model_Pelaksana::create($request->all());
 
-        Alert::success('Data Jenis Publikasi Berhasil Ditambahkan!');
+        Alert::success('Data Pelaksana Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('Jenis-Publikasi.index');
+        return redirect()->route('Pelaksana.index');
     }
 
     /**
@@ -74,6 +83,11 @@ class ControllerPelaksana extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Pelaksana::find($id);
+        $dosen = Model_Dosen::get();
+        $mahasiswa = Model_Mahasiswa::get();
+        $pkm = Model_Pkm::get();
+        return view('MasterDataRekap/Pelaksana.edit', compact('data', 'dosen', 'mahasiswa', 'pkm'));
     }
 
     /**
@@ -83,9 +97,18 @@ class ControllerPelaksana extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_pelaksana)
     {
         //
+        $validatedData = $request->validate([
+            'id_dosen' => 'required',
+            'id_mhs' => 'required',
+            'id_pkm' => 'required',
+            'no' => 'required'
+        ]);
+        Model_Pelaksana::whereid_pelaksana($id_pelaksana)->update($validatedData);
+        Alert::success('Data Pelaksana Berhasil Diubah!');
+        return redirect()->route('Pelaksana.index');
     }
 
     /**
@@ -97,5 +120,9 @@ class ControllerPelaksana extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Pelaksana::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Pelaksana Berhasil Dihapus!');
+        return redirect()->route('Pelaksana.index');
     }
 }

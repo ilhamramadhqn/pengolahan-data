@@ -43,15 +43,15 @@ class ControllerSumber extends Controller
     {
         //
         $request->validate([
-            'nama_jenis_penelitian' => 'required'
+            'sumber_dana' => 'required'
         ]);
 
         //fungsi eloquent untuk menambah data
         Model_Sumber::create($request->all());
 
-        Alert::success('Data Jenis Publikasi Berhasil Ditambahkan!');
+        Alert::success('Data Sumber Dana Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('Jenis-Publikasi.index');
+        return redirect()->route('Sumber.index');
     }
 
     /**
@@ -74,6 +74,8 @@ class ControllerSumber extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Sumber::find($id);
+        return view('MasterDataRekap/Sumber.edit', compact('data'));
     }
 
     /**
@@ -83,9 +85,15 @@ class ControllerSumber extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_sumber)
     {
         //
+        $validatedData = $request->validate([
+            'sumber_dana' => 'required'
+        ]);
+        Model_Sumber::whereid_sumber($id_sumber)->update($validatedData);
+        Alert::success('Data Sumber Berhasil Diubah!');
+        return redirect()->route('Sumber.index');
     }
 
     /**
@@ -97,5 +105,9 @@ class ControllerSumber extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Sumber::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Sumber Berhasil Dihapus!');
+        return redirect()->route('Sumber.index');
     }
 }

@@ -61,7 +61,7 @@
                 </div>
                 <div class="card-footer text-right">
                   <a href="/Mahasiswa" class="btn btn-danger">Back</a>
-                  <button type="submit" class="btn btn-success">Submit</button>
+                  <button type="submit" class="btn btn-success">Update</button>
                 </div>
               </form>
 

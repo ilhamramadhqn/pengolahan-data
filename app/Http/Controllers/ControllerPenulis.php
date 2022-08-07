@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Penulis;
+use App\Models\Model_Dosen;
+use App\Models\Model_Mahasiswa;
+use App\Models\Model_Artikel;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -30,7 +33,10 @@ class ControllerPenulis extends Controller
     public function create()
     {
         //
-        return view('MasterDataRekap/Penulis.tambah');
+        $dosen = Model_Dosen::get();
+        $mahasiswa = Model_Mahasiswa::get();
+        $artikel = Model_Artikel::get();
+        return view('MasterDataRekap/Penulis.tambah', compact('dosen', 'mahasiswa', 'artikel'));
     }
 
     /**
@@ -43,15 +49,18 @@ class ControllerPenulis extends Controller
     {
         //
         $request->validate([
-            'nama_jenis_penelitian' => 'required'
+            'id_dosen' => 'required',
+            'id_mhs' => 'required',
+            'id_artikel' => 'required',
+            'no' => 'required'
         ]);
 
         //fungsi eloquent untuk menambah data
         Model_Penulis::create($request->all());
 
-        Alert::success('Data Jenis Publikasi Berhasil Ditambahkan!');
+        Alert::success('Data Penulis Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('Jenis-Publikasi.index');
+        return redirect()->route('Penulis.index');
     }
 
     /**
@@ -74,6 +83,11 @@ class ControllerPenulis extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Penulis::find($id);
+        $dosen = Model_Dosen::get();
+        $mahasiswa = Model_Mahasiswa::get();
+        $artikel = Model_Artikel::get();
+        return view('MasterDataRekap/Penulis.edit', compact('data', 'dosen', 'mahasiswa', 'artikel'));
     }
 
     /**
@@ -83,9 +97,18 @@ class ControllerPenulis extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_penulis)
     {
         //
+        $validatedData = $request->validate([
+            'id_dosen' => 'required',
+            'id_mhs' => 'required',
+            'id_artikel' => 'required',
+            'no' => 'required'
+        ]);
+        Model_Penulis::whereid_penulis($id_penulis)->update($validatedData);
+        Alert::success('Data Pelaksana Berhasil Diubah!');
+        return redirect()->route('Penulis.index');
     }
 
     /**
@@ -97,5 +120,9 @@ class ControllerPenulis extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Penulis::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Penulis Berhasil Dihapus!');
+        return redirect()->route('Penulis.index');
     }
 }

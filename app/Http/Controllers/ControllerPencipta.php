@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Pencipta;
+use App\Models\Model_HKI;
+use App\Models\Model_Dosen;
+use App\Models\Model_Mahasiswa;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -30,7 +33,10 @@ class ControllerPencipta extends Controller
     public function create()
     {
         //
-        return view('MasterDataRekap/Pencipta.tambah');
+        $dosen = Model_Dosen::get();
+        $mahasiswa = Model_Mahasiswa::get();
+        $hki = Model_HKI::get();
+        return view('MasterDataRekap/Pencipta.tambah', compact('dosen', 'mahasiswa', 'hki'));
     }
 
     /**
@@ -43,15 +49,18 @@ class ControllerPencipta extends Controller
     {
         //
         $request->validate([
-            'nama_jenis_penelitian' => 'required'
+            'id_dosen' => 'required',
+            'id_mhs' => 'required',
+            'id_hki' => 'required',
+            'no' => 'required'
         ]);
 
         //fungsi eloquent untuk menambah data
         Model_Pencipta::create($request->all());
 
-        Alert::success('Data Jenis Publikasi Berhasil Ditambahkan!');
+        Alert::success('Data Pencipta Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('Jenis-Publikasi.index');
+        return redirect()->route('Pencipta.index');
     }
 
     /**
@@ -74,6 +83,11 @@ class ControllerPencipta extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Pencipta::find($id);
+        $dosen = Model_Dosen::get();
+        $mahasiswa = Model_Mahasiswa::get();
+        $hki = Model_HKI::get();
+        return view('MasterDataRekap/Pencipta.edit', compact('data', 'dosen', 'mahasiswa', 'hki'));
     }
 
     /**
@@ -83,10 +97,20 @@ class ControllerPencipta extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_pencipta)
     {
         //
+        $validatedData = $request->validate([
+            'id_dosen' => 'required',
+            'id_mhs' => 'required',
+            'id_hki' => 'required',
+            'no' => 'required'
+        ]);
+        Model_Pencipta::whereid_pencipta($id_pencipta)->update($validatedData);
+        Alert::success('Data Pencipta Berhasil Diubah!');
+        return redirect()->route('Pencipta.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -97,5 +121,9 @@ class ControllerPencipta extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Pencipta::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Pencipta Berhasil Dihapus!');
+        return redirect()->route('Pencipta.index');
     }
 }
