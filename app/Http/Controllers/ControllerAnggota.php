@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Anggota;
+use App\Models\Model_Dosen;
+use App\Models\Model_Mahasiswa;
+use App\Models\Model_Penelitian;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -27,7 +30,10 @@ class ControllerAnggota extends Controller
     public function create()
     {
         //
-        return view('Anggota.tambah');
+        $dosen = Model_Dosen::get();
+        $mahasiswa = Model_Mahasiswa::get();
+        $penelitian = Model_Penelitian::get();
+        return view('Anggota.tambah', compact('dosen', 'mahasiswa', 'penelitian'));
     }
 
     /**
@@ -74,6 +80,11 @@ class ControllerAnggota extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Anggota::find($id);
+        $dosen = Model_Dosen::get();
+        $mahasiswa = Model_Mahasiswa::get();
+        $penelitian = Model_Penelitian::get();
+        return view('Anggota.edit', compact('data', 'dosen', 'mahasiswa', 'penelitian'));
     }
 
     /**
@@ -83,9 +94,18 @@ class ControllerAnggota extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_anggota)
     {
         //
+        $validatedData = $request->validate([
+            'id_dosen' => 'required',
+            'id_mhs' => 'required',
+            'id_penelitian' => 'required',
+            'no' => 'required'
+        ]);
+        Model_Anggota::whereid_anggota($id_anggota)->update($validatedData);
+        Alert::success('Data Anggota Berhasil Diubah!');
+        return redirect()->route('Anggota.index');
     }
 
     /**
@@ -97,5 +117,9 @@ class ControllerAnggota extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Anggota::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Anggota Berhasil Dihapus!');
+        return redirect()->route('Anggota.index');
     }
 }

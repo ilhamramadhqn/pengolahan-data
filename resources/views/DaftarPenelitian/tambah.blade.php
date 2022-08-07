@@ -19,7 +19,7 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label>Silahkan Masukan Judul Penelitian</label>
-                    <input type="text" name="judul_penelitian" id="judul_penelitian" class="form-control" autofocus>
+                    <input type="text" name="judul_penelitian" id="judul_penelitian" class="form-control" onkeyup="this.value = this.value.toUpperCase();" autofocus>
                     @if ($errors->has('judul_penelitian'))
                     <span class="text-danger">{{ $errors->first('judul_penelitian') }}</span>
                     @endif
@@ -27,51 +27,54 @@
                   <div class="form-group">
                   <label>Silahkan Masukan Sumber</label>
                   <select name="id_sumber" id="id_sumber" class="form-control">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                    @foreach($sumber as $sum)  
+                      <option value="{{$sum->id_sumber}}">{{$sum->sumber_dana}}</option>
+                    @endforeach
                   </select>
                   </div>
                   <div class="form-group">
                   <label>Silahkan Masukan Jenis Penelitian</label>
                   <select name="id_jenis_penelitian" id="id_jenis_penelitian" class="form-control">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                    @foreach($jenispublikasi as $jp)  
+                      <option value="{{$jp->id_jenis_penelitian}}">{{$jp->nama_jenis_penelitian}}</option>
+                    @endforeach
                   </select>
                   </div>
                   <div class="form-group">
                   <label>Silahkan Masukan Semester</label>
                   <select name="id_semester" id="id_semester" class="form-control">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                    @foreach($semester as $s)  
+                      <option value="{{$s->id_semester}}">{{$s->nama_semester}}</option>
+                    @endforeach
                   </select>
                   </div>
                   <div class="form-group">
                   <label>Silahkan Masukan Tahun</label>
                   <select name="tahun" id="tahun" class="form-control">
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
+                    <option value="">-</option>
+                    <?php
+                    $now = date('Y');
+                    for ($i = $now; $i >= 2000; $i--) {
+                      echo "<option value='".$i."'>".$i."</option>";
+                    }
+                    ?>
                   </select>
                   </div>
+                  <div class="form-group">
+                    <label>Upload File Proposal</label>
+                    <input type="file" name="file_proposal" id="file_proposal" class="form-control" autofocus>
+                    @if ($errors->has('file_proposal'))
+                    <span class="text-danger">{{ $errors->first('file_proposal') }}</span>
+                    @endif
+                  </div>
+                  <!-- <div class="form-group">
+                    <label>Upload File Jurnal</label>
+                    <input type="file" name="file_laporan_akhir" id="file_laporan_akhir" class="form-control" autofocus>
+                    @if ($errors->has('file_laporan_akhir'))
+                    <span class="text-danger">{{ $errors->first('file_laporan_akhir') }}</span>
+                    @endif
+                  </div> -->
                 </div>
-                file Proposal
-                  file laporan akhir
                 <div class="card-footer text-right">
                   <a href="/Penelitian" class="btn btn-danger">Back</a>
                   <button type="submit" class="btn btn-success">Submit</button>
