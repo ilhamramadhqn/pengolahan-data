@@ -46,7 +46,7 @@
                         <td>{{$d->semester->nama_semester}}</td>
                         <td>{{$d->tahun}}</td>
                         <td>@if($d->file_proposal != null)<a href="{{ asset('files/proposal-files/' . $d->file_proposal) }}" class="btn btn-outline-info">DOWNLOAD</a>@else - @endif</td> 
-                        <td>@if($d->file_proposal != null)<a href="{{ asset('files/laporan-akhir-files/' . $d->file_laporan_akhir) }}" class="btn btn-outline-info">DOWNLOAD</a>@else - @endif</td>
+                        <td>@if($d->file_laporan_akhir != null)<a href="{{ asset('files/laporan-akhir-files/' . $d->file_laporan_akhir) }}" class="btn btn-outline-info">DOWNLOAD</a>@else - @endif</td>
                         <td class="text-center">
                         @if($d->status == "P")
                         <a class="edit btn btn-icon btn-warning btn-sm align-center">Menunggu Persetujuan</a>
@@ -76,7 +76,6 @@
                           </form>
                           @else
                           @endif
-
                         </td>
                       </tr>
                     @endforeach

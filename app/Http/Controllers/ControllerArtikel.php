@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Artikel;
+use App\Models\Model_Jurnal;
+use App\Models\Model_Penelitian;
+use App\Models\Model_Semester;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -40,6 +43,7 @@ class ControllerArtikel extends Controller
     public function store(Request $request)
     {
         //
+        $add =new Model_Penelitian();
         $request->validate([
             'id_jurnal' => 'required',
             'id_penelitian' => 'required',
@@ -49,16 +53,49 @@ class ControllerArtikel extends Controller
             'tanggal' => 'required',
             'judul_artikel' => 'required',
             'link' => 'required',
-            'file_artikel' => 'required',
-            'status' => 'required'
+            'file_artikel' => 'mimes:doc,docx,pdf'
         ]);  
         
-        //fungsi eloquent untuk menambah data
-        Model_Artikel::create($request->all());
+        if(!$request->file('file_proposal'))
+        { 
+        $file_NewName="";
+        }
+        else
+        {
+        $fileName   = $request->file('file_proposal')->getClientOriginalName();
+        $fileExt   = $request->file('file_proposal')->getClientOriginalExtension();
+        $file_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$fileExt;
+        if (is_dir('files/proposal-files/' . $request['judul_penelitian'])) { } else {
+        }
+        $request->file('file_proposal')->move("files/proposal-files/", $file_NewName);
+        }
+        
+        if(!$request->file('file_laporan_akhir'))
+        { 
+        $file2_NewName="";
+        }
+        else
+        {
+        $file2Name   = $request->file('file_laporan_akhir')->getClientOriginalName();
+        $file2Ext   = $request->file('file_laporan_akhir')->getClientOriginalExtension();
+        $file2_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$file2Ext;
+        if (is_dir('files/laporan-akhir-files/' . $request['judul_penelitian'])) { } else {
+        }
+        $request->file('file_laporan_akhir')->move("files/laporan-akhir-files/", $file2_NewName);
+        }
 
-        Alert::success('Data Artikel Berhasil Ditambahkan!');
+        $add->file_proposal=$file_NewName;
+        $add->file_laporan_akhir=$file2_NewName;
+        $add->id_sumber=$request['id_sumber'];
+        $add->id_jenis_penelitian=$request['id_jenis_penelitian'];
+        $add->id_semester=$request['id_semester'];
+        $add->judul_penelitian=$request['judul_penelitian'];
+        $add->tahun=$request['tahun'];
+        $add->status='P';
+        $add->save();
+        Alert::success('Data Penelitian Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('Artikel.index');
+        return redirect()->route('Penelitian.index');
     }
 
     /**
@@ -81,6 +118,11 @@ class ControllerArtikel extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Penelitian::find($id);
+        $sumber = Model_Sumber::get();
+        $jenispublikasi = Model_JenisPublikasi::get();
+        $semester = Model_Semester::get();
+        return view('DaftarPenelitian.edit', compact('data', 'sumber', 'jenispublikasi', 'semester'));
     }
 
     /**
@@ -93,6 +135,70 @@ class ControllerArtikel extends Controller
     public function update(Request $request, $id)
     {
         //
+        $update = Model_Penelitian::where('id_penelitian',$id_penelitian)->first();
+        $request->validate([
+            'id_jurnal' => 'required',
+            'id_penelitian' => 'required',
+            'id_semester' => 'required',
+            'volume' => 'required',
+            'no_jurnal' => 'required',
+            'tanggal' => 'required',
+            'judul_artikel' => 'required',
+            'link' => 'required',
+            'file_artikel' => 'mimes:doc,docx,pdf'
+        ]);  
+        
+        if($request->hasfile('file_proposal'))
+        { 
+        $destination = 'files/proposal-files/'.$request->file_proposal;
+        if(File::exists($destination)){
+            File::delete($destination);
+        }
+        $fotoExt   = $request->file('file_proposal')->getClientOriginalExtension();
+        $file_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$fotoExt; 
+        $request->file('file_proposal')->move("files/proposal-files/", $file_NewName);
+        $update->file_proposal=$file_NewName;
+        }
+
+        if($request->hasfile('file_laporan_akhir'))
+        { 
+        $destination2 = 'files/laporan-akhir-files/'.$request->file_laporan_akhir;
+        if(File::exists($destination2)){
+            File::delete($destination2);
+        }
+        $foto2Ext   = $request->file('file_laporan_akhir')->getClientOriginalExtension();
+        $file2_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$foto2Ext; 
+        $request->file('file_laporan_akhir')->move("files/laporan-akhir-files/", $file2_NewName);
+        $update->file_laporan_akhir=$file2_NewName;
+        }
+
+        $update->id_sumber=$request['id_sumber'];
+        $update->id_jenis_penelitian=$request['id_jenis_penelitian'];
+        $update->id_semester=$request['id_semester'];
+        $update->judul_penelitian=$request['judul_penelitian'];
+        $update->tahun=$request['tahun'];
+        $update->update();
+        Alert::success('Data Penelitian Berhasil Diubah!');
+        return redirect()->route('Penelitian.index');
+    }
+
+    public function accept($id_penelitian)
+    {
+        //
+        $acc = Model_Penelitian::where('id_penelitian',$id_penelitian)->first();
+        $acc->status = "T";
+        $acc->update();
+        Alert::success('Data Penelitian Telah Diterima!');
+        return redirect()->route('Penelitian.index');
+    }
+    public function decline($id_penelitian)
+    {
+        //
+        $acc = Model_Penelitian::where('id_penelitian',$id_penelitian)->first();
+        $acc->status = "F";
+        $acc->update();
+        Alert::success('Data Penelitian Telah Ditolak!');
+        return redirect()->route('Penelitian.index');
     }
 
     /**
@@ -104,5 +210,17 @@ class ControllerArtikel extends Controller
     public function destroy($id)
     {
         //
+        $delete = Model_Penelitian::where('id_penelitian',$id)->first();
+        $destination = 'files/proposal-files/'.$delete->file_proposal;
+        if(File::exists($destination)){
+            File::delete($destination);
+        }
+        $destination2 = 'files/laporan-akhir-files/'.$delete->file_laporan_akhir;
+        if(File::exists($destination2)){
+            File::delete($destination2);
+        }
+        $delete->delete();
+        Alert::success('Data Penelitian Berhasil Dihapus!');
+        return redirect()->route('Penelitian.index');
     }
 }
