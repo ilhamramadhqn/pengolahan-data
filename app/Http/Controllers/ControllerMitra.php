@@ -47,7 +47,7 @@ class ControllerMitra extends Controller
             'provinsi_mitra' => 'required',
             'pic_mitra' => 'required',
             'telepon_mitra' => 'required',
-            'email_mitra' => 'required',
+            'email_mitra' => 'required|email',
         ]);
 
         //fungsi eloquent untuk menambah data
@@ -78,6 +78,8 @@ class ControllerMitra extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Mitra::find($id);
+        return view('MasterData/Mitra.edit', compact('data'));
     }
 
     /**
@@ -87,9 +89,21 @@ class ControllerMitra extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_mitra)
     {
         //
+        $validatedData = $request->validate([
+            'nama_mitra' => 'required',
+            'alamat_mitra' => 'required',
+            'kota_mitra' => 'required',
+            'provinsi_mitra' => 'required',
+            'pic_mitra' => 'required',
+            'telepon_mitra' => 'required',
+            'email_mitra' => 'required|email',
+        ]);
+        Model_Mitra::whereid_mitra($id_mitra)->update($validatedData);
+        Alert::success('Data Mitra Berhasil Diubah!');
+        return redirect()->route('Mitra.index');
     }
 
     /**
@@ -101,5 +115,9 @@ class ControllerMitra extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Mitra::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Mitra Berhasil Dihapus!');
+        return redirect()->route('Mitra.index');
     }
 }

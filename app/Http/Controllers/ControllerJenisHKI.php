@@ -43,15 +43,15 @@ class ControllerJenisHKI extends Controller
     {
         //
         $request->validate([
-            'nama_jenis_penelitian' => 'required'
+            'nama_jenis_hki' => 'required'
         ]);
 
         //fungsi eloquent untuk menambah data
         Model_JenisHKI::create($request->all());
 
-        Alert::success('Data Jenis Publikasi Berhasil Ditambahkan!');
+        Alert::success('Data Jenis HKI Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('Jenis-Publikasi.index');
+        return redirect()->route('Jenis-HKI.index');
     }
 
     /**
@@ -74,6 +74,8 @@ class ControllerJenisHKI extends Controller
     public function edit($id)
     {
         //
+        $data = Model_JenisHKI::find($id);
+        return view('MasterDataRekap/JenisHKI.edit', compact('data'));
     }
 
     /**
@@ -83,9 +85,15 @@ class ControllerJenisHKI extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_jenis_hki)
     {
         //
+        $validatedData = $request->validate([
+            'nama_jenis_hki' => 'required'
+        ]);
+        Model_JenisHKI::whereid_jenis_hki($id_jenis_hki)->update($validatedData);
+        Alert::success('Data Jenis HKI Berhasil Diubah!');
+        return redirect()->route('Jenis-HKI.index');
     }
 
     /**
@@ -97,5 +105,9 @@ class ControllerJenisHKI extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_JenisHKI::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Jenis HKI Berhasil Dihapus!');
+        return redirect()->route('Jenis-HKI.index');
     }
 }

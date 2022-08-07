@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Dosen;
+use App\Models\Model_Prodi;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -27,7 +28,8 @@ class ControllerDosen extends Controller
     public function create()
     {
         //
-        return view('MasterData/Dosen.tambah');
+        $prodi = Model_Prodi::get();
+        return view('MasterData/Dosen.tambah', compact('prodi'));
     }
 
     /**
@@ -41,7 +43,7 @@ class ControllerDosen extends Controller
         //
         $request->validate([
             'id_prodi' => 'required',
-            'kode_dosen' => 'required',
+            'kode_dosen' => 'required|min:2|max:4',
             'nidn' => 'required',
             'nama_dosen' => 'required',
             'jabfung_dosen' => 'required',
@@ -49,7 +51,7 @@ class ControllerDosen extends Controller
             'kota_dosen' => 'required',
             'provinsi_dosen' => 'required',
             'telp_dosen' => 'required',
-            'email' => 'required',
+            'email' => 'required|email'
         ]);  
         
         //fungsi eloquent untuk menambah data
@@ -80,6 +82,9 @@ class ControllerDosen extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Dosen::find($id);
+        $prodi = Model_Prodi::get();
+        return view('MasterData/Dosen.edit', compact('data','prodi'));
     }
 
     /**
@@ -89,9 +94,24 @@ class ControllerDosen extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_dosen)
     {
         //
+        $validatedData = $request->validate([
+            'id_prodi' => 'required',
+            'kode_dosen' => 'required|min:2|max:4',
+            'nidn' => 'required|max:10',
+            'nama_dosen' => 'required',
+            'jabfung_dosen' => 'required',
+            'alamat_dosen' => 'required',
+            'kota_dosen' => 'required',
+            'provinsi_dosen' => 'required',
+            'telp_dosen' => 'required',
+            'email' => 'required|email'
+        ]);
+        Model_Dosen::whereid_dosen($id_dosen)->update($validatedData);
+        Alert::success('Data Dosen Berhasil Diubah!');
+        return redirect()->route('Dosen.index');
     }
 
     /**
@@ -103,5 +123,9 @@ class ControllerDosen extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Dosen::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Dosen Berhasil Dihapus!');
+        return redirect()->route('Dosen.index');
     }
 }

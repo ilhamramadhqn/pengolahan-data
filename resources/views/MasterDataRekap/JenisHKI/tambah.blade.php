@@ -11,24 +11,23 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h4>Tambah Data Fakultas</h4>
+              <h4>Tambah Jenis HKI</h4>
             </div>
             <div class="card-body p-0">
-              <form method="post" action="{{ route('Jenis_Publikasi.store') }}">
+              <form method="post" action="{{ route('Jenis-HKI.store') }}">
                 @csrf
                 <div class="card-body">
-
                   <div class="form-group">
-                    <label>Silahkan Masukan Nama Jenis Publikasi</label>
-                    <input type="text" name="nama_jenis_penelitian" id="nama_jenis_penelitian" class="form-control" autofocus>
-                    @if ($errors->has('nama_jenis_penelitian'))
-                    <span class="text-danger">{{ $errors->first('nama_jenis_penelitian') }}</span>
+                    <label>Silahkan Masukan Nama Jenis HKI</label>
+                    <input type="text" name="nama_jenis_hki" id="nama_jenis_hki" class="form-control" class="form-control" onkeyup="this.value = this.value.toUpperCase();" autofocus>
+                    @if ($errors->has('nama_jenis_hki'))
+                    <span class="text-danger">{{ $errors->first('nama_jenis_hki') }}</span>
                     @endif
                   </div>
 
                 </div>
                 <div class="card-footer text-right">
-                  <a href="/Jenis-Publikasi" class="btn btn-danger">Back</a>
+                  <a href="/Jenis-HKI" class="btn btn-danger">Back</a>
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </form>

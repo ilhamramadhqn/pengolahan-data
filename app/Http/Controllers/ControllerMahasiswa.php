@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Mahasiswa;
+use App\Models\Model_Prodi;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -27,7 +28,8 @@ class ControllerMahasiswa extends Controller
     public function create()
     {
         //
-        return view('MasterData/Mahasiswa.tambah');
+        $prodi = Model_Prodi::get();
+        return view('MasterData/Mahasiswa.tambah',compact('prodi'));
     }
 
     /**
@@ -41,7 +43,7 @@ class ControllerMahasiswa extends Controller
         //
         $request->validate([
             'id_prodi' => 'required',
-            'npm' => 'required',
+            'npm' => 'required|max:11',
             'nama_mhs' => 'required',
             'kelas' => 'required',
             'angkatan' => 'required'
@@ -75,6 +77,9 @@ class ControllerMahasiswa extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Mahasiswa::find($id);
+        $prodi = Model_Prodi::get();
+        return view('MasterData/Mahasiswa.edit', compact('data','prodi'));
     }
 
     /**
@@ -84,9 +89,19 @@ class ControllerMahasiswa extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_mhs)
     {
         //
+        $validatedData = $request->validate([
+            'id_prodi' => 'required',
+            'npm' => 'required|max:11',
+            'nama_mhs' => 'required',
+            'kelas' => 'required',
+            'angkatan' => 'required'
+        ]);
+        Model_Mahasiswa::whereid_mhs($id_mhs)->update($validatedData);
+        Alert::success('Data Mahasiswa Berhasil Diubah!');
+        return redirect()->route('Mahasiswa.index');
     }
 
     /**
@@ -98,5 +113,9 @@ class ControllerMahasiswa extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Mahasiswa::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Mahasiswa Berhasil Dihapus!');
+        return redirect()->route('Mahasiswa.index');
     }
 }

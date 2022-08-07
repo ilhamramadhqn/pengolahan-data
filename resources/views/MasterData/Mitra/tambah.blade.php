@@ -20,7 +20,7 @@
 
                   <div class="form-group">
                     <label>Silahkan Masukan Nama Mitra</label>
-                    <input type="text" name="nama_mitra" id="nama_mitra" class="form-control" autofocus>
+                    <input type="text" name="nama_mitra" id="nama_mitra" class="form-control" onkeyup="this.value = this.value.toUpperCase();" autofocus>
                     @if ($errors->has('nama_mitra'))
                     <span class="text-danger">{{ $errors->first('nama_mitra') }}</span>
                     @endif
@@ -36,16 +36,24 @@
                   <div class="form-group">
                     <label>Silahkan Masukan Kota</label>
                   <select name="kota_mitra" id="kota_mitra" class="form-control">
-                    <option value="Jakarta">Jakarta</option>
-                    <option value="Bandung">Bandung</option>
-                    <option value="Yogyakarta">Yogyakarta</option>
+                    <option value="KOTA BANDUNG">KOTA BANDUNG</option>
+                    <option value="KOTA JAKARTA">KOTA JAKARTA</option>
+                    <option value="KOTA YOGYAKARTA">KOTA YOGYAKARTA</option>
+                    <option value="KOTA MEDAN">KOTA MEDAN</option>
+                    <option value="KOTA MALANG">KOTA MALANG</option>
                   </select>
                   <div class="form-group">
                     <label>Silahkan Masukan Provinsi </label>
                   <select name="provinsi_mitra" id="provinsi_mitra" class="form-control">
-                    <option value="Jawa Barat">Jawa Barat</option>
-                    <option value="Jawa Timur">Jawa Timur</option>
-                    <option value="Jawa Tengah">Jawa Tengah</option>
+                    <option value="JAWA BARAT">JAWA BARAT</option>
+                    <option value="JAWA TIMUR">JAWA TIMUR</option>
+                    <option value="JAWA TENGAH">JAWA TENGAH</option>
+                    <option value="KALIMANTAN BARAT">KALIMANTAN BARAT</option>
+                    <option value="KALIMANTAN TIMUR">KALIMANTAN TIMUR</option>
+                    <option value="KALIMANTAN TENGAH">KALIMANTAN TENGAH</option>
+                    <option value="SULAWESI BARAT">SULAWESI BARAT</option>
+                    <option value="SULAWESI TIMUR">SULAWESI TIMUR</option>
+                    <option value="SULAWESI TENGAH">SULAWESI TENGAH</option>
                   </select>
                   <div class="form-group">
                     <label>Silahkan Masukan PIC</label>
@@ -56,14 +64,14 @@
                   </div>
                   <div class="form-group">
                     <label>Silahkan Masukan Telepon</label>
-                    <input type="text" name="telepon_mitra" id="telepon_mitra" class="form-control" autofocus>
+                    <input type="number" name="telepon_mitra" id="telepon_mitra" class="form-control" autofocus>
                     @if ($errors->has('telepon_mitra'))
                     <span class="text-danger">{{ $errors->first('telepon_mitra') }}</span>
                     @endif
                   </div>
                   <div class="form-group">
                     <label>Silahkan Masukan Email</label>
-                    <input type="text" name="email_mitra" id="email_mitra" class="form-control" autofocus>
+                    <input type="email" name="email_mitra" id="email_mitra" class="form-control" autofocus>
                     @if ($errors->has('email_mitra'))
                     <span class="text-danger">{{ $errors->first('email_mitra') }}</span>
                     @endif
