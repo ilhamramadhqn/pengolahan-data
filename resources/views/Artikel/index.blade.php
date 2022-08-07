@@ -33,8 +33,8 @@
                         <th>No Jurnal</th>
                         <th>Tanggal</th>
                         <th>Link</th>
-                        <th>File Artikel</th>
-                        <th>Status</th>
+                        <th class="text-center">File Artikel</th>
+                        <th class="text-center">Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -50,7 +50,7 @@
                         <td>{{$d->no_jurnal}}</td>
                         <td>{{$d->tanggal}}</td>
                         <td><a href="{{$d->link}}">{{$d->link}}</a></td>
-                        <td>@if($d->file_artikel != null)<a href="{{ asset('files/artikel-files/' . $d->file_artikel) }}" class="btn btn-outline-info">DOWNLOAD</a>@else - @endif</td>
+                        <td class="text-center">@if($d->file_artikel != null)<a href="{{ asset('files/artikel-files/' . $d->file_artikel) }}" class="btn btn-outline-info">DOWNLOAD</a>@else Belum Upload Artikel @endif</td>
                         <td class="text-center">
                         @if($d->status == "P")
                         <a class="edit btn btn-icon btn-warning btn-sm align-center">Menunggu Persetujuan</a>

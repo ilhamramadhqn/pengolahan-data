@@ -71,11 +71,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/Penelitian/{id_penelitian}/acc', 'App\Http\Controllers\ControllerPenelitian@accept');
     Route::patch('/Penelitian/{id_penelitian}/dec', 'App\Http\Controllers\ControllerPenelitian@decline');
     Route::resource('/Pengabdian-Masyarakat', ControllerPkm::class);
+    Route::patch('//Pengabdian-Masyarakat/{id_pkm}/acc', 'App\Http\Controllers\ControllerPkm@accept');
+    Route::patch('//Pengabdian-Masyarakat/{id_pkm}/dec', 'App\Http\Controllers\ControllerPkm@decline');
 
     Route::resource('/Anggota', ControllerAnggota::class);
     Route::resource('/Artikel', ControllerArtikel::class);
+    Route::patch('/Artikel/{id_artikel}/acc', 'App\Http\Controllers\ControllerArtikel@accept');
+    Route::patch('/Artikel/{id_artikel}/dec', 'App\Http\Controllers\ControllerArtikel@decline');
     Route::resource('/HKI', ControllerHKI::class);
+    Route::patch('/HKI/{id_hki}/acc', 'App\Http\Controllers\ControllerHKI@accept');
+    Route::patch('/HKI/{id_hki}/dec', 'App\Http\Controllers\ControllerHKI@decline');
     Route::resource('/Jurnal', ControllerJurnal::class);
+    Route::patch('/Jurnal/{id_jurnal}/acc', 'App\Http\Controllers\ControllerJurnal@accept');
+    Route::patch('/Jurnal/{id_jurnal}/dec', 'App\Http\Controllers\ControllerJurnal@decline');
 
     Route::resource('/Jenis-HKI', ControllerJenisHKI::class);
 

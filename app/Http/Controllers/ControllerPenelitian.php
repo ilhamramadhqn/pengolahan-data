@@ -67,7 +67,7 @@ class ControllerPenelitian extends Controller
         {
         $fileName   = $request->file('file_proposal')->getClientOriginalName();
         $fileExt   = $request->file('file_proposal')->getClientOriginalExtension();
-        $file_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$fileExt;
+        $file_NewName = "Penelitian-".date("Ymd")."-".$request['judul_penelitian']."." .$fileExt;
         if (is_dir('files/proposal-files/' . $request['judul_penelitian'])) { } else {
         }
         $request->file('file_proposal')->move("files/proposal-files/", $file_NewName);
@@ -81,7 +81,7 @@ class ControllerPenelitian extends Controller
         {
         $file2Name   = $request->file('file_laporan_akhir')->getClientOriginalName();
         $file2Ext   = $request->file('file_laporan_akhir')->getClientOriginalExtension();
-        $file2_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$file2Ext;
+        $file2_NewName = "Penelitian-".date("Ymd")."-".$request['judul_penelitian']."." .$file2Ext;
         if (is_dir('files/laporan-akhir-files/' . $request['judul_penelitian'])) { } else {
         }
         $request->file('file_laporan_akhir')->move("files/laporan-akhir-files/", $file2_NewName);
@@ -156,7 +156,7 @@ class ControllerPenelitian extends Controller
             File::delete($destination);
         }
         $fotoExt   = $request->file('file_proposal')->getClientOriginalExtension();
-        $file_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$fotoExt; 
+        $file_NewName = "Penelitian-".date("Ymd")."-".$request['judul_penelitian']."." .$fotoExt; 
         $request->file('file_proposal')->move("files/proposal-files/", $file_NewName);
         $update->file_proposal=$file_NewName;
         }
@@ -168,7 +168,7 @@ class ControllerPenelitian extends Controller
             File::delete($destination2);
         }
         $foto2Ext   = $request->file('file_laporan_akhir')->getClientOriginalExtension();
-        $file2_NewName = date("Ymd")."-".$request['judul_penelitian']."." .$foto2Ext; 
+        $file2_NewName = "Penelitian-".date("Ymd")."-".$request['judul_penelitian']."." .$foto2Ext; 
         $request->file('file_laporan_akhir')->move("files/laporan-akhir-files/", $file2_NewName);
         $update->file_laporan_akhir=$file2_NewName;
         }
@@ -192,6 +192,7 @@ class ControllerPenelitian extends Controller
         Alert::success('Data Penelitian Telah Diterima!');
         return redirect()->route('Penelitian.index');
     }
+    
     public function decline($id_penelitian)
     {
         //

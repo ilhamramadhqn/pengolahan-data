@@ -26,10 +26,11 @@
                       <tr>
                         <th>No</th>
                         <th>No HKI</th>
+                        <th>Judul HKI</th>
                         <th>Jenis HKI</th>
                         <th>Tanggal Permohonan</th>
-                        <th>Judul HKI</th>
-                        <th>File HKI</th>
+                        <th class="text-center">File HKI</th>
+                        <th class="text-center">Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -38,13 +39,39 @@
                       <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$d->no_hki}}</td>
+                        <td>{{$d->judul_hki}}</td>
                         <td>{{$d->jenishki->nama_jenis_hki}}</td>
                         <td>{{$d->tanggal_permohonan}}</td>
-                        <td>{{$d->judul_hki}}</td>
-                        <td>{{$d->file_hki}}</td>
+                        <td class="text-center">@if($d->file_hki != null)<a href="{{ asset('files/hki-files/' . $d->file_hki) }}" class="btn btn-outline-info">DOWNLOAD</a>@else Belum Upload HKI @endif</td>
+                        <td class="text-center">
+                        @if($d->status == "P")
+                        <a class="edit btn btn-icon btn-warning btn-sm align-center">Menunggu Persetujuan</a>
+                        @elseif($d->status == "T")
+                        <a class="edit btn btn-icon btn-success btn-sm align-center">Diterima</a>
+                        @else
+                        <a class="edit btn btn-icon btn-danger btn-sm align-center" >Ditolak</a>
+                        @endif
+                        </td>
                         <td>
-                          <a href="" class="edit btn btn-icon btn-primary btn-sm editFk"><i class="fas fa-edit"></i></a>
-                          <a href="" class="btn btn-icon btn-danger btn-sm deleteFk"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>
+                          <a href="HKI/{{$d->id_hki}}/edit" class="edit btn btn-icon btn-primary btn-sm "><i class="fas fa-edit"></i></a>
+                          <form action="{{ route('HKI.destroy', $d->id_hki)}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertFunc();" type="submit"><i class="far fa-trash-alt text-white" data-feather="delete"></i></button>
+                          </form>
+                          @if($d->status == "P")
+                          <form action="HKI/{{$d->id_hki}}/acc" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <button class="btn btn-icon btn-info btn-sm" onclick="return AllertAcc();" type="submit">Accept</button>
+                          </form>
+                          <form action="HKI/{{$d->id_hki}}/dec" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertDec();" type="submit">Decline</button>
+                          </form>
+                          @else
+                          @endif
                         </td>
                       </tr>
                     @endforeach
@@ -58,57 +85,20 @@
       </div>  
     </div>
   </div>
-  <!-- <tr>
-                        @foreach($data as $d)
-                        <th>{{$d->id_fakultas}}</th>
-                        <th>{{$d->kode_fakultas}}</th>
-                        <th>{{$d->nama_fakultas}}</th>
-                        <th>
-                          <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$fakultass->id_fakultas.'" data-original-title="Edit" class="edit btn btn-icon btn-primary btn-sm editFk"><i class="fas fa-edit"></i></a>
-                          <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$fakultass->id_fakultas.'" data-original-title="Delete" class="btn btn-icon btn-danger btn-sm deleteFk"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>
-                        </th>
-                        @endforeach
-                      </tr> -->
-
-  <!-- Start Modal Edit -->
-  <div class="modal" id="ajaxModel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="modelHeading"></h4>
-        </div>
-        <div class="modal-body">
-          <div class="card-body">
-
-            <form id="productForm" name="productForm" class="form-horizontal">
-
-              <input type="hidden" name="fakultass" id="fakultass">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">Kode Fakultas</label>
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" id="kode_fakultas" name="kode_fakultas" maxlength="50" required="">
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <label class="col-sm-6 control-label">Nama Fakultas</label>
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" id="nama_fakultas" name="nama_fakultas" maxlength="50" required="">
-                </div>
-              </div>
-
-              <div class="card-footer text-right">
-                <div class="mt-3">
-                  <button type="submit" class="btn btn-success btn-sm" id="saveBtn" value="create">Save changes</button>
-                </div>
-              </div>
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End Modal Edit -->
+  <script>
+  function AllertFunc() {
+      if(!confirm("Are You Sure to delete this"))
+      event.preventDefault();
+  }
+  function AllertAcc() {
+      if(!confirm("Are You Sure to accept this"))
+      event.preventDefault();
+  }
+  function AllertDec() {
+      if(!confirm("Are You Sure to decline this"))
+      event.preventDefault();
+  }
+</script>
 </section>
 </div>
 @endsection

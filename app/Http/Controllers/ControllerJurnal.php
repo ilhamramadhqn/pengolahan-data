@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model_Jurnal;
+use App\Models\Model_KategoriJurnal;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -28,7 +29,8 @@ class ControllerJurnal extends Controller
     public function create()
     {
         //
-        return view('Jurnal.tambah');
+        $jenisjurnal = Model_KategoriJurnal::get();
+        return view('Jurnal.tambah', compact('jenisjurnal'));
     }
 
     /**
@@ -41,18 +43,14 @@ class ControllerJurnal extends Controller
     {
         //
         $request->validate([
-            'id_jurnal' => 'required',
-            'id_penelitian' => 'required',
-            'id_semester' => 'required',
-            'volume' => 'required',
-            'no_jurnal' => 'required',
-            'tanggal' => 'required',
-            'judul_Jurnal' => 'required',
-            'link' => 'required',
-            'file_Jurnal' => 'required',
-            'status' => 'required'
-        ]);  
-        
+            'id_jenis' => 'required',
+            'nama_jurnal' => 'required',
+            'penerbit_jurnal' => 'required',
+            'pssn_jurnal' => 'required',
+            'eissn_jurnal' => 'required',
+            'link_website' => 'required'
+        ]);
+
         //fungsi eloquent untuk menambah data
         Model_Jurnal::create($request->all());
 
@@ -81,6 +79,9 @@ class ControllerJurnal extends Controller
     public function edit($id)
     {
         //
+        $data = Model_Jurnal::find($id);
+        $jenisjurnal = Model_KategoriJurnal::get();
+        return view('Jurnal.edit', compact('data', 'jenisjurnal'));
     }
 
     /**
@@ -90,9 +91,20 @@ class ControllerJurnal extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_jurnal)
     {
         //
+        $validatedData = $request->validate([
+            'id_jenis' => 'required',
+            'nama_jurnal' => 'required',
+            'penerbit_jurnal' => 'required',
+            'pssn_jurnal' => 'required',
+            'eissn_jurnal' => 'required',
+            'link_website' => 'required'
+        ]);
+        Model_Jurnal::whereid_jurnal($id_jurnal)->update($validatedData);
+        Alert::success('Data Jurnal Berhasil Diubah!');
+        return redirect()->route('Jurnal.index');
     }
 
     /**
@@ -104,5 +116,9 @@ class ControllerJurnal extends Controller
     public function destroy($id)
     {
         //
+        $data = Model_Jurnal::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Jurnal Berhasil Dihapus!');
+        return redirect()->route('Jurnal.index');
     }
 }
