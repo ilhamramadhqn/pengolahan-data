@@ -21,7 +21,7 @@ use App\Http\Controllers\ControllerPencipta;
 use App\Http\Controllers\ControllerPenulis;
 use App\Http\Controllers\ControllerJurnal;
 use App\Http\Controllers\ControllerJenisHKI;
-
+use App\Http\Controllers\ControllerPengguna;
 
 
 /*
@@ -35,27 +35,35 @@ use App\Http\Controllers\ControllerJenisHKI;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+     return view('welcome');
+});
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function ()    {
+    Route::get('/home', function ()    {
         return view('home');
     });
+    // Route::get('/', function ()    {
+    //     return view('login');
+    // });
+
     //Kelola Pengguna
-    // Route::get('/Data-Admin', ControllerAdmin::class);
-    // Route::get('/Data-Dekan', ControllerDekan::class);
-    // Route::get('/Data-Dosen', ControllerDosen::class);
-    // Route::get('/Data-Mahasiswa', ControllerMahasiswa::class);
+    Route::resource('/Data-Admin', ControllerPengguna::class);
+    Route::get('/Data-Admin', 'App\Http\Controllers\ControllerPengguna@data_admin');
+    Route::resource('/Data-Dekan', ControllerPengguna::class);
+    Route::get('/Data-Dekan', 'App\Http\Controllers\ControllerPengguna@data_dekan');
+    Route::resource('/Data-Dosen', ControllerPengguna::class);
+    Route::get('/Data-Dosen', 'App\Http\Controllers\ControllerPengguna@data_dosen');
+    Route::resource('/Data-Mahasiswa', ControllerPengguna::class);
+    Route::get('/Data-Mahasiswa', 'App\Http\Controllers\ControllerPengguna@data_mahasiswa');
     
-    //Master Data
+ 
     Route::resource('/Mitra', ControllerMitra::class);
     Route::resource('/Dosen', ControllerDosen::class);
     Route::resource('/Mahasiswa', ControllerMahasiswa::class);
-    //Master Rekapitulasi
+ 
     Route::resource('/Fakultas', ControllerFakultas::class);
     Route::resource('/Program-Studi', ControllerProdi::class);
     Route::resource('/Jenis-Publikasi', ControllerJenisPublikasi::class);
