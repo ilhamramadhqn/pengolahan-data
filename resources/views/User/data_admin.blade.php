@@ -15,7 +15,7 @@
             <div class="card-header">
               <h4>Data Admin</h4>
               <div class="card-header-action">
-                <a href="{{ route('Jurnal.create') }}" class="btn btn-primary">Tambah Data<i class="fas fa-plus"></i></a>
+                <a href="tambah'" class="btn btn-primary">Tambah Data<i class="fas fa-plus"></i></a>
               </div>
             </div>
             <div class="col-md-12">
@@ -40,7 +40,7 @@
                         <td>{{$d->authority}}</td>
                         <td>
                           <a href="Data-Admin/{{$d->id}}/edit" class="edit btn btn-icon btn-primary btn-sm "><i class="fas fa-edit"></i></a>
-                          <form action="{{ route('Data-Admin.destroy', $d->id)}}" method="post">
+                          <form action="Data-Admin/{{$d->id}}/delete" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertFunc();" type="submit"><i class="far fa-trash-alt text-white" data-feather="delete"></i></button>

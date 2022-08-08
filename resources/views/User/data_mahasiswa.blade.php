@@ -13,7 +13,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h4>Data Admin</h4>
+              <h4>Data Mahasiswa</h4>
               <div class="card-header-action">
                 <a href="{{ route('Jurnal.create') }}" class="btn btn-primary">Tambah Data<i class="fas fa-plus"></i></a>
               </div>

@@ -50,8 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
     // });
 
     //Kelola Pengguna
-    Route::resource('/Data-Admin', ControllerPengguna::class);
     Route::get('/Data-Admin', 'App\Http\Controllers\ControllerPengguna@data_admin');
+    Route::get('/Data-Admin/tambah', 'App\Http\Controllers\ControllerPengguna@create_admin');
     Route::resource('/Data-Dekan', ControllerPengguna::class);
     Route::get('/Data-Dekan', 'App\Http\Controllers\ControllerPengguna@data_dekan');
     Route::resource('/Data-Dosen', ControllerPengguna::class);

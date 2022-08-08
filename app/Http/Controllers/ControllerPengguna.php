@@ -17,7 +17,7 @@ class ControllerPengguna extends Controller
     {
         //
         $data = User::get();
-        return view('Data-Admin.index',compact('data'));
+        return view('Users.index',compact('data'));
     }
 
     public function data_admin()
@@ -50,11 +50,10 @@ class ControllerPengguna extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create_admin()
     {
         //
-        $jenisjurnal = Model_KategoriJurnal::get();
-        return view('Jurnal.tambah', compact('jenisjurnal'));
+        return view('User.create_admin');
     }
 
     /**
