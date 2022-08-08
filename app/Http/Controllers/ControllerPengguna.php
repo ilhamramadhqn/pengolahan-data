@@ -140,7 +140,7 @@ class ControllerPengguna extends Controller
 
         Alert::success('Data User Mahasiswa Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('home');
+        return redirect()->route('Data-Mahasiswa.data_admin');
     }
 
     /**

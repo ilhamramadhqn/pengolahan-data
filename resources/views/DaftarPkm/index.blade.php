@@ -61,6 +61,7 @@
                             @method('DELETE')
                             <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertFunc();" type="submit"><i class="far fa-trash-alt text-white" data-feather="delete"></i></button>
                           </form>
+                          @if(Auth::user()->authority == "SUPERADMIN" || Auth::user()->authority == "ADMIN" || Auth::user()->authority == "DEKAN" )
                           @if($d->status == "P")
                           <form action="Pengabdian-Masyarakat/{{$d->id_pkm}}/acc" method="post">
                             @csrf
@@ -72,6 +73,8 @@
                             @method('PATCH')
                             <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertDec();" type="submit">Decline</button>
                           </form>
+                          @else
+                          @endif
                           @else
                           @endif
                         </td>

@@ -11,7 +11,7 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 30/07/2022 19:17:31
+ Date: 08/08/2022 11:25:29
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `anggota` (
   CONSTRAINT `anggota_ibfk_1` FOREIGN KEY (`id_dosen`) REFERENCES `dosen` (`id_dosen`),
   CONSTRAINT `anggota_ibfk_2` FOREIGN KEY (`id_mhs`) REFERENCES `mahasiswa` (`id_mhs`),
   CONSTRAINT `anggota_ibfk_3` FOREIGN KEY (`id_penelitian`) REFERENCES `penelitian` (`id_penelitian`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of anggota
@@ -78,7 +78,7 @@ CREATE TABLE `artikel` (
 -- Records of artikel
 -- ----------------------------
 BEGIN;
-INSERT INTO `artikel` VALUES (1, 1, 1, 13, 15, '2', '2021-07-31', 'PERBANDINGAN ALGORITMA KLASIFIKASI DATA MINING UNTUK PENELUSURAN POTENSI MINAT CALON MAHASISWA BARU', 'https://journal.uniku.ac.id/index.php/ilkom/article/view/4162', NULL, NULL, NULL, NULL);
+INSERT INTO `artikel` VALUES (1, 1, 1, 13, 15, '2', '2021-07-31', 'PERBANDINGAN ALGORITMA KLASIFIKASI DATA MINING UNTUK PENELUSURAN POTENSI MINAT CALON MAHASISWA BARU', 'https://journal.uniku.ac.id/index.php/ilkom/article/view/4162', NULL, 'P', NULL, '2022-08-07 13:48:55');
 COMMIT;
 
 -- ----------------------------
@@ -91,7 +91,7 @@ CREATE TABLE `dana` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_sumber`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of dana
@@ -122,7 +122,7 @@ CREATE TABLE `dosen` (
   PRIMARY KEY (`id_dosen`) USING BTREE,
   KEY `FK_RELATIONSHIP_2` (`id_prodi`),
   CONSTRAINT `dosen_ibfk_1` FOREIGN KEY (`id_prodi`) REFERENCES `prodi` (`id_prodi`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of dosen
@@ -132,7 +132,7 @@ INSERT INTO `dosen` VALUES (1, 3, 'BUD', '0407118203', 'BUDIMAN, S.T., M.KOM', '
 INSERT INTO `dosen` VALUES (2, 4, 'MAR', '0406107902', 'MARWONDO, S.T., M.KOM.', 'ASISTEN AHLI', '-', 'KOTA BANDUNG', 'JAWA BARAT', '-', 'marwondo@unibi.ac.id', NULL, NULL);
 INSERT INTO `dosen` VALUES (3, 3, 'ZTN', '0410029301', 'ZATIN NIQOTAINI, S.TR., M.KOM.', 'ASISTEN AHLI', '-', 'KOTA BANDUNG', 'JAWA BARAT', '-', '-', NULL, NULL);
 INSERT INTO `dosen` VALUES (4, 3, 'VMN', '1023069001', ' VANI MAHARANI NASUTION, S.KOM., M.KOM.', 'LEKTOR', '-', '-', '-', '-', '-', NULL, NULL);
-INSERT INTO `dosen` VALUES (6, 4, 'KOM', '0407118204', 'testNamadosen', 'LEKTOR', 'sadsaf', 'Bandung', 'Jawa Barat', '-', '-', '2022-07-27 13:08:40', '2022-07-27 13:08:40');
+INSERT INTO `dosen` VALUES (7, 5, 'TST', '0407118205', 'JASMAN PARDEDE TEST', 'REKTOR TEST', 'Test alamat test', 'KOTA JAKARTA', 'JAWA TIMUR', '0980899', 'testemailtest@gmail.com', '2022-08-07 01:14:22', '2022-08-07 01:36:40');
 COMMIT;
 
 -- ----------------------------
@@ -157,12 +157,12 @@ CREATE TABLE `failed_jobs` (
 DROP TABLE IF EXISTS `fakultas`;
 CREATE TABLE `fakultas` (
   `id_fakultas` int(11) NOT NULL AUTO_INCREMENT,
-  `kode_fakultas` char(3) DEFAULT NULL,
+  `kode_fakultas` char(4) DEFAULT NULL,
   `nama_fakultas` varchar(50) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_fakultas`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of fakultas
@@ -171,8 +171,6 @@ BEGIN;
 INSERT INTO `fakultas` VALUES (1, 'FTI', 'Fakultas Teknologi dan Informatika', NULL, NULL);
 INSERT INTO `fakultas` VALUES (2, 'FSD', 'Fakultas Senirupa dan Design', '2022-07-15 00:16:01', '2022-07-15 00:16:01');
 INSERT INTO `fakultas` VALUES (3, 'FKD', 'Fakultas Kedokteran', '2022-07-15 00:16:52', '2022-07-15 00:16:52');
-INSERT INTO `fakultas` VALUES (4, 'tes', 'test', '2022-07-15 00:18:14', '2022-07-15 00:18:14');
-INSERT INTO `fakultas` VALUES (5, 'FSI', 'Fakultas Sastra Inggris', '2022-07-22 08:22:44', '2022-07-22 08:22:44');
 COMMIT;
 
 -- ----------------------------
@@ -186,19 +184,20 @@ CREATE TABLE `hki` (
   `tanggal_permohonan` date DEFAULT NULL,
   `judul_hki` varchar(200) DEFAULT NULL,
   `file_hki` varchar(100) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_hki`) USING BTREE,
   KEY `FK_RELATIONSHIP_29` (`id_jenis_hki`),
   CONSTRAINT `hki_ibfk_1` FOREIGN KEY (`id_jenis_hki`) REFERENCES `jenis_hki` (`id_jenis_hki`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of hki
 -- ----------------------------
 BEGIN;
-INSERT INTO `hki` VALUES (1, 1, 'EC00202218177', '2022-03-16', 'Aplikasi Absensi Online Untuk Menunjang Efektifitas Kehadiran Berbasis Mobile', '', NULL, NULL);
-INSERT INTO `hki` VALUES (2, 1, 'EC00202019721', '2020-06-25', 'TALENTA CBT (APLIKASI COMPUTER BASED TEST DALAM PENILAIAN HARIAN SECARA ONLINE BERBASIS WEB)', '', NULL, NULL);
+INSERT INTO `hki` VALUES (1, 1, 'EC00202218177', '2022-03-16', 'Aplikasi Absensi Online Untuk Menunjang Efektifitas Kehadiran Berbasis Mobile', '', 'P', NULL, NULL);
+INSERT INTO `hki` VALUES (2, 1, 'EC00202019721', '2020-06-25', 'TALENTA CBT (APLIKASI COMPUTER BASED TEST DALAM PENILAIAN HARIAN SECARA ONLINE BERBASIS WEB)', '', 'P', NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -211,7 +210,7 @@ CREATE TABLE `jenis_hki` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_jenis_hki`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of jenis_hki
@@ -231,7 +230,7 @@ CREATE TABLE `jenis_jurnal` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_jenis`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of jenis_jurnal
@@ -247,7 +246,6 @@ INSERT INTO `jenis_jurnal` VALUES (7, 'SEMINAR INTERNASIONAL', NULL, NULL);
 INSERT INTO `jenis_jurnal` VALUES (8, 'TULISAN DI MEDIA MASSA WILAYAH', NULL, NULL);
 INSERT INTO `jenis_jurnal` VALUES (9, 'TULISAN DI MEDIA MASSA NASIONAL', NULL, NULL);
 INSERT INTO `jenis_jurnal` VALUES (10, 'TULISAN DI MEDIA MASSA INTERNASIONAL', NULL, NULL);
-INSERT INTO `jenis_jurnal` VALUES (29, 'Jurnal', '2022-07-22 09:00:04', '2022-07-22 09:00:04');
 COMMIT;
 
 -- ----------------------------
@@ -274,7 +272,6 @@ INSERT INTO `jenis_penelitian` VALUES (5, 'PENELITIAN KERJASAMA ANTAR PERGURUAN 
 INSERT INTO `jenis_penelitian` VALUES (6, 'PENELITIAN PASCASARJANA', NULL, NULL);
 INSERT INTO `jenis_penelitian` VALUES (7, 'PENELITIAN DASAR UNGGULAN PERGURUAN TINGGI (PDUPT)', NULL, NULL);
 INSERT INTO `jenis_penelitian` VALUES (8, ' PENELITIAN TERAPAN UNGGULAN PERGURUAN TINGGI', NULL, NULL);
-INSERT INTO `jenis_penelitian` VALUES (9, 'Penelitian', '2022-07-22 08:50:08', '2022-07-22 08:50:08');
 COMMIT;
 
 -- ----------------------------
@@ -294,7 +291,7 @@ CREATE TABLE `jurnal` (
   PRIMARY KEY (`id_jurnal`) USING BTREE,
   KEY `FK_RELATIONSHIP_4` (`id_jenis`),
   CONSTRAINT `jurnal_ibfk_1` FOREIGN KEY (`id_jenis`) REFERENCES `jenis_jurnal` (`id_jenis`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of jurnal
@@ -319,7 +316,7 @@ CREATE TABLE `mahasiswa` (
   PRIMARY KEY (`id_mhs`) USING BTREE,
   KEY `FK_RELATIONSHIP_3` (`id_prodi`),
   CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`id_prodi`) REFERENCES `prodi` (`id_prodi`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of mahasiswa
@@ -329,7 +326,7 @@ INSERT INTO `mahasiswa` VALUES (1, 3, '18121028', 'PERMANA SIDIK', 'KARYAWAN', 2
 INSERT INTO `mahasiswa` VALUES (2, 4, '19111003', 'DEDI ISKANDAR', 'KARYAWAN', 2019, NULL, NULL);
 INSERT INTO `mahasiswa` VALUES (3, 3, '17121005', 'DADAN HAMDANI', 'KARYAWAN', 2017, NULL, NULL);
 INSERT INTO `mahasiswa` VALUES (4, 4, '15111004', 'AMOS DUAN NUGROHO', 'KARYAWAN', 2015, NULL, NULL);
-INSERT INTO `mahasiswa` VALUES (5, 4, '20121028', 'nasa', 'Reguler', 2022, '2022-07-27 13:27:28', '2022-07-27 13:27:28');
+INSERT INTO `mahasiswa` VALUES (7, 4, '16123211', 'NASA TEST UPDATE', 'KARYAWAN', 2022, '2022-08-07 01:57:24', '2022-08-07 01:57:24');
 COMMIT;
 
 -- ----------------------------
@@ -379,14 +376,13 @@ CREATE TABLE `mitra` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_mitra`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of mitra
 -- ----------------------------
 BEGIN;
 INSERT INTO `mitra` VALUES (1, 'IKATAN GURU TAMAN KANAK-KANAK INDONESIA (IGTKI) BANDUNG', 'JL. PALASARI NO.5, LKR. SEL., KEC. LENGKONG', 'KOTA BANDUNG', 'JAWA BARAT', '-', '-', '-', NULL, NULL);
-INSERT INTO `mitra` VALUES (2, 'TESTTESTTEST', 'sfsf', 'Bandung', 'Jawa Barat', '-', '-', '-', '2022-07-23 06:49:11', '2022-07-23 06:49:11');
 COMMIT;
 
 -- ----------------------------
@@ -419,7 +415,7 @@ CREATE TABLE `pelaksana` (
   CONSTRAINT `pelaksana_ibfk_1` FOREIGN KEY (`id_pkm`) REFERENCES `pkm` (`id_pkm`),
   CONSTRAINT `pelaksana_ibfk_2` FOREIGN KEY (`id_dosen`) REFERENCES `dosen` (`id_dosen`),
   CONSTRAINT `pelaksana_ibfk_3` FOREIGN KEY (`id_mhs`) REFERENCES `mahasiswa` (`id_mhs`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pelaksana
@@ -447,7 +443,7 @@ CREATE TABLE `pencipta` (
   CONSTRAINT `pencipta_ibfk_1` FOREIGN KEY (`id_hki`) REFERENCES `hki` (`id_hki`),
   CONSTRAINT `pencipta_ibfk_2` FOREIGN KEY (`id_mhs`) REFERENCES `mahasiswa` (`id_mhs`),
   CONSTRAINT `pencipta_ibfk_3` FOREIGN KEY (`id_dosen`) REFERENCES `dosen` (`id_dosen`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pencipta
@@ -484,13 +480,14 @@ CREATE TABLE `penelitian` (
   CONSTRAINT `penelitian_ibfk_1` FOREIGN KEY (`id_jenis_penelitian`) REFERENCES `jenis_penelitian` (`id_jenis_penelitian`),
   CONSTRAINT `penelitian_ibfk_2` FOREIGN KEY (`id_semester`) REFERENCES `semester` (`id_semester`),
   CONSTRAINT `penelitian_ibfk_3` FOREIGN KEY (`id_sumber`) REFERENCES `dana` (`id_sumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of penelitian
 -- ----------------------------
 BEGIN;
-INSERT INTO `penelitian` VALUES (1, 2, 1, 11, 'PERBANDINGAN ALGORITMA KLASIFIKASI DATA MINING PADA PENELUSURAN POTENSI MINAT CALON MAHASISWA BARU', 2021, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `penelitian` VALUES (1, 2, 1, 11, 'PERBANDINGAN ALGORITMA KLASIFIKASI DATA MINING PADA PENELUSURAN POTENSI MINAT CALON MAHASISWA BARU', 2021, NULL, NULL, 'P', NULL, NULL);
+INSERT INTO `penelitian` VALUES (2, 2, 2, 2, 'TEST PENELITIAN', 2021, NULL, NULL, 'P', '2022-08-07 08:08:56', '2022-08-07 10:51:36');
 COMMIT;
 
 -- ----------------------------
@@ -512,7 +509,7 @@ CREATE TABLE `penulis` (
   CONSTRAINT `penulis_ibfk_1` FOREIGN KEY (`id_mhs`) REFERENCES `mahasiswa` (`id_mhs`),
   CONSTRAINT `penulis_ibfk_2` FOREIGN KEY (`id_artikel`) REFERENCES `artikel` (`id_artikel`),
   CONSTRAINT `penulis_ibfk_3` FOREIGN KEY (`id_dosen`) REFERENCES `dosen` (`id_dosen`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of penulis
@@ -562,13 +559,13 @@ CREATE TABLE `pkm` (
   KEY `FK_RELATIONSHIP_14` (`id_sumber`),
   CONSTRAINT `pkm_ibfk_1` FOREIGN KEY (`id_mitra`) REFERENCES `mitra` (`id_mitra`),
   CONSTRAINT `pkm_ibfk_2` FOREIGN KEY (`id_sumber`) REFERENCES `dana` (`id_sumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pkm
 -- ----------------------------
 BEGIN;
-INSERT INTO `pkm` VALUES (1, 1, 1, 'Pelatihan Microsoft Office 2016 Bagi Guru TK Anggota IGTKI Kota Bandung Gelombang 1 Kelompok B', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `pkm` VALUES (1, 1, 1, 'Pelatihan Microsoft Office 2016 Bagi Guru TK Anggota IGTKI Kota Bandung Gelombang 1 Kelompok B', '2022-08-08', '2022-08-10', NULL, NULL, 'P', NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -585,7 +582,7 @@ CREATE TABLE `prodi` (
   PRIMARY KEY (`id_prodi`) USING BTREE,
   KEY `FK_RELATIONSHIP_1` (`id_fakultas`),
   CONSTRAINT `prodi_ibfk_1` FOREIGN KEY (`id_fakultas`) REFERENCES `fakultas` (`id_fakultas`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of prodi
@@ -625,9 +622,7 @@ INSERT INTO `semester` VALUES (9, 'GANJIL 2019/2020', NULL, NULL);
 INSERT INTO `semester` VALUES (10, 'GENAP 2019/2020', NULL, NULL);
 INSERT INTO `semester` VALUES (11, 'GANJIL 2020/2021', NULL, NULL);
 INSERT INTO `semester` VALUES (12, 'GENAP 2020/2021', NULL, NULL);
-INSERT INTO `semester` VALUES (13, 'GANJIL 2021/2022', NULL, NULL);
-INSERT INTO `semester` VALUES (14, 'GENAP 2021/2022', NULL, NULL);
-INSERT INTO `semester` VALUES (15, 'GANJIL 2021/2022', '2022-07-28 08:05:41', '2022-07-28 08:05:41');
+INSERT INTO `semester` VALUES (13, 'GENAP 2022/2023', NULL, '2022-08-06 20:13:08');
 COMMIT;
 
 -- ----------------------------
@@ -646,13 +641,18 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES (1, 'SUPER ADMIN', NULL, 'superadmin', NULL, '$2y$10$g8a63nzDGZpvJOtRSDrSQOd8MCefg5xv61R.TrzUIS6YIXaU1oNPm', NULL, '2022-07-09 06:36:32', '2022-07-09 06:36:32');
+INSERT INTO `users` VALUES (3, 'SUPER ADMIN', 'SUPERADMIN', '1111', NULL, '$2y$10$g8a63nzDGZpvJOtRSDrSQOd8MCefg5xv61R.TrzUIS6YIXaU1oNPm', NULL, '2022-08-08 10:58:02', '2022-08-08 10:58:05');
+INSERT INTO `users` VALUES (19, 'Nicolas', 'MAHASISWA', '132017226', NULL, '$2y$10$xjhxc3XbeEqDjbBcqLFog.AohnYrj.ACYO7J.dLc1EJdRkfs.klBO', NULL, '2022-08-08 04:03:13', '2022-08-08 04:03:13');
+INSERT INTO `users` VALUES (22, 'Arief Muhammad', 'ADMIN', '0407128233', NULL, '$2y$10$kNXCdrh5HX8wqSkYudbk..2YdhMRx0PKPipMv0ggTKo.bdsdX2q7u', NULL, '2022-08-08 04:22:18', '2022-08-08 04:22:18');
+INSERT INTO `users` VALUES (23, 'Paulus N', 'DEKAN', '0407148513', NULL, '$2y$10$bXNKhrIdqldTQJy0z9OMSOD2OfKXkISpR4ZPy1Y1Rho9X8qG1FdLe', NULL, '2022-08-08 04:23:35', '2022-08-08 04:23:35');
+INSERT INTO `users` VALUES (24, 'Nasa L', 'DOSEN', '0407118203', NULL, '$2y$10$6DiyJryV/sdMmeYE5t8W7uGIL19sntZK7WkC.F3XMf0plcQcHBWPG', NULL, '2022-08-08 04:24:04', '2022-08-08 04:24:04');
+INSERT INTO `users` VALUES (25, 'Nicolas S', 'MAHASISWA', '18121028', NULL, '$2y$10$6thQZxfBkZNyN1mKxfbqbebRcVSLw8AKmncLG/b2paC7G5Upiy1sq', NULL, '2022-08-08 04:24:37', '2022-08-08 04:24:37');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

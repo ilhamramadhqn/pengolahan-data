@@ -18,7 +18,7 @@
     <li class="{{ request()->is('/home') ? 'active' : '' }}">
       <a class="nav-link" href="{{ url('/home') }}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
     </li>
-    
+    @if(Auth::user()->authority == "SUPERADMIN" || Auth::user()->authority == "ADMIN" || Auth::user()->authority == "DEKAN" )
     <li class="menu-header">Master Data Pengguna</li>
     <li class="nav-item dropdown">
     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-user-check"></i> <span>Kelola Pengguna</span></a>
@@ -32,8 +32,6 @@
         <a class="nav-link" href="{{ url('/Anggota') }}"><i class="fas fa-address-card"></i> <span>Anggota</span></a>
       </li>
     </li>
-    
-
     <li class="menu-header">Master Data Rekapitulasi</li>
     <li class="nav-item dropdown">
     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-list"></i> <span>Master Rekapitulasi</span></a>
@@ -58,7 +56,8 @@
         <li><a class="nav-link" href="/Penulis"><i class="fa fa-file"></i>Penulis</a></li>
         </ul>
     </li>
-
+    @else
+    @endif
     <li class="menu-header">Daftar Penelitian</li>
     <li class="{{ request()->is('/') ? : '' }}">
       <a class="nav-link" href="{{ url('/Penelitian') }}"><i class="fas fa-book"></i> <span>Daftar Penelitian</span></a>
