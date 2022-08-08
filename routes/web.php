@@ -36,7 +36,7 @@ use App\Http\Controllers\ControllerPengguna;
 */
 
 Route::get('/', function () {
-     return view('welcome');
+     return view('/auth/login');
 });
 
 Auth::routes();
@@ -45,19 +45,27 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', function ()    {
         return view('home');
     });
-    // Route::get('/', function ()    {
-    //     return view('login');
-    // });
 
     //Kelola Pengguna
-    Route::get('/Data-Admin', 'App\Http\Controllers\ControllerPengguna@data_admin');
-    Route::get('/Data-Admin/tambah', 'App\Http\Controllers\ControllerPengguna@create_admin');
+    Route::resource('/Data-Admin', ControllerPengguna::class);
+    Route::get('/Data-Admin', 'App\Http\Controllers\ControllerPengguna@data_admin')->name('Data-Admin.data_admin');
+    Route::get('/Data-Admin/create', 'App\Http\Controllers\ControllerPengguna@create_admin');
+    Route::post('/Data-Admin/store', 'App\Http\Controllers\ControllerPengguna@store_admin');
+    
     Route::resource('/Data-Dekan', ControllerPengguna::class);
-    Route::get('/Data-Dekan', 'App\Http\Controllers\ControllerPengguna@data_dekan');
+    Route::get('/Data-Dekan', 'App\Http\Controllers\ControllerPengguna@data_dekan')->name('Data-Dekan.data_admin');
+    Route::get('/Data-Dekan/create', 'App\Http\Controllers\ControllerPengguna@create_dekan');
+    Route::post('/Data-Dekan/store', 'App\Http\Controllers\ControllerPengguna@store_dekan');
+
     Route::resource('/Data-Dosen', ControllerPengguna::class);
-    Route::get('/Data-Dosen', 'App\Http\Controllers\ControllerPengguna@data_dosen');
+    Route::get('/Data-Dosen', 'App\Http\Controllers\ControllerPengguna@data_dosen')->name('Data-Dosen.data_admin');
+    Route::get('/Data-Dosen/create', 'App\Http\Controllers\ControllerPengguna@create_dosen');
+    Route::post('/Data-Dosen/store', 'App\Http\Controllers\ControllerPengguna@store_dosen');
+
     Route::resource('/Data-Mahasiswa', ControllerPengguna::class);
-    Route::get('/Data-Mahasiswa', 'App\Http\Controllers\ControllerPengguna@data_mahasiswa');
+    Route::get('/Data-Mahasiswa', 'App\Http\Controllers\ControllerPengguna@data_mahasiswa')->name('Data-Mahasiswa.data_admin');
+    Route::get('/Data-Mahasiswa/create', 'App\Http\Controllers\ControllerPengguna@create_mahasiswa');
+    Route::post('/Data-Mahasiswa/store', 'App\Http\Controllers\ControllerPengguna@store_mahasiswa');
     
  
     Route::resource('/Mitra', ControllerMitra::class);

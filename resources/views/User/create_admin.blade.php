@@ -11,10 +11,10 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h4>Tambah Data Admin</h4>
+              <h4>Tambah Data {{$route}}</h4>
             </div>
             <div class="card-body p-0">
-              <form method="post" action="{{ route('Data-Admin.store') }}">
+              <form method="post" action="/Data-{{$route}}/store">
                 @csrf
                 <div class="card-body">
                   <div class="form-group">
@@ -33,13 +33,13 @@
                   </div>
                   <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" id="password" class="form-control" onkeyup="this.value = this.value.toUpperCase();" autofocus>
+                    <input type="password" name="password" id="password" class="form-control" autofocus>
                     @if ($errors->has('password'))
                     <span class="text-danger">{{ $errors->first('password') }}</span>
                     @endif
                   </div>
                 <div class="card-footer text-right">
-                  <a href="/Data-Admin" class="btn btn-danger">Back</a>
+                  <a href="/Data-{{$route}}" class="btn btn-danger">Back</a>
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </form>

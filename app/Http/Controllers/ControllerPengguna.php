@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ControllerPengguna extends Controller
@@ -23,26 +24,30 @@ class ControllerPengguna extends Controller
     public function data_admin()
     {
         //
+        $route = "Admin";
         $data = User::where('authority', 'ADMIN')->orderBy('id', 'desc')->get();
-        return view('User.data_admin',compact('data'));
+        return view('User.data_admin',compact('data', 'route'));
     }
     public function data_dekan()
     {
         //
+        $route = "Dekan";
         $data = User::where('authority', 'DEKAN')->orderBy('id', 'desc')->get();
-        return view('User.data_admin',compact('data'));
+        return view('User.data_admin',compact('data', 'route'));
     }
     public function data_dosen()
     {
         //
+        $route = "Dosen";
         $data = User::where('authority', 'DOSEN')->orderBy('id', 'desc')->get();
-        return view('User.data_admin',compact('data'));
+        return view('User.data_admin',compact('data', 'route'));
     }
     public function data_mahasiswa()
     {
         //
+        $route = "Mahasiswa";
         $data = User::where('authority', 'MAHASISWA')->orderBy('id', 'desc')->get();
-        return view('User.data_admin',compact('data'));
+        return view('User.data_admin',compact('data', 'route'));
     }
 
     /**
@@ -53,7 +58,26 @@ class ControllerPengguna extends Controller
     public function create_admin()
     {
         //
-        return view('User.create_admin');
+        $route = "Admin";
+        return view('User.create_admin', compact('route'));
+    }
+    public function create_dekan()
+    {
+        //
+        $route = "Dekan";
+        return view('User.create_admin', compact('route'));
+    }
+    public function create_dosen()
+    {
+        //
+        $route = "Dosen";
+        return view('User.create_admin', compact('route'));
+    }
+    public function create_mahasiswa()
+    {
+        //
+        $route = "Mahasiswa";
+        return view('User.create_admin', compact('route'));
     }
 
     /**
@@ -62,24 +86,61 @@ class ControllerPengguna extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store_admin(Request $request)
     {
         //
-        $request->validate([
-            'id_jenis' => 'required',
-            'nama_jurnal' => 'required',
-            'penerbit_jurnal' => 'required',
-            'pssn_jurnal' => 'required',
-            'eissn_jurnal' => 'required',
-            'link_website' => 'required'
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'authority' => "ADMIN",
+            'password' => Hash::make($request['password']),
         ]);
 
-        //fungsi eloquent untuk menambah data
-        Model_Jurnal::create($request->all());
-
-        Alert::success('Data Jurnal Berhasil Ditambahkan!');
+        Alert::success('Data User Admin Berhasil Ditambahkan!');
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('Jurnal.index');
+        return redirect()->route('Data-Admin.data_admin');
+    }
+    public function store_dekan(Request $request)
+    {
+        //
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'authority' => "DEKAN",
+            'password' => Hash::make($request['password']),
+        ]);
+
+        Alert::success('Data User Dekan Berhasil Ditambahkan!');
+        //jika data berhasil ditambahkan, akan kembali ke halaman utama
+        return redirect()->route('Data-Dekan.data_admin');
+    }
+    public function store_dosen(Request $request)
+    {
+        //
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'authority' => "DOSEN",
+            'password' => Hash::make($request['password']),
+        ]);
+
+        Alert::success('Data User Dosen Berhasil Ditambahkan!');
+        //jika data berhasil ditambahkan, akan kembali ke halaman utama
+        return redirect()->route('Data-Dosen.data_admin');
+    }
+    public function store_mahasiswa(Request $request)
+    {
+        //
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'authority' => "MAHASISWA",
+            'password' => Hash::make($request['password']),
+        ]);
+
+        Alert::success('Data User Mahasiswa Berhasil Ditambahkan!');
+        //jika data berhasil ditambahkan, akan kembali ke halaman utama
+        return redirect()->route('home');
     }
 
     /**
@@ -102,9 +163,6 @@ class ControllerPengguna extends Controller
     public function edit($id)
     {
         //
-        $data = Model_Jurnal::find($id);
-        $jenisjurnal = Model_KategoriJurnal::get();
-        return view('Jurnal.edit', compact('data', 'jenisjurnal'));
     }
 
     /**
@@ -117,17 +175,6 @@ class ControllerPengguna extends Controller
     public function update(Request $request, $id_jurnal)
     {
         //
-        $validatedData = $request->validate([
-            'id_jenis' => 'required',
-            'nama_jurnal' => 'required',
-            'penerbit_jurnal' => 'required',
-            'pssn_jurnal' => 'required',
-            'eissn_jurnal' => 'required',
-            'link_website' => 'required'
-        ]);
-        Model_Jurnal::whereid_jurnal($id_jurnal)->update($validatedData);
-        Alert::success('Data Jurnal Berhasil Diubah!');
-        return redirect()->route('Jurnal.index');
     }
 
     /**
@@ -139,9 +186,9 @@ class ControllerPengguna extends Controller
     public function destroy($id)
     {
         //
-        $data = Model_Jurnal::findOrFail($id);
+        $data = User::findOrFail($id);
         $data->delete();
-        Alert::success('Data Jurnal Berhasil Dihapus!');
-        return redirect()->route('Jurnal.index');
+        Alert::success('Data User Berhasil Dihapus!');
+        return redirect()->route('Data-Admin.data_admin');
     }
 }
