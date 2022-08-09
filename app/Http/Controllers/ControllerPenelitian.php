@@ -7,7 +7,9 @@ use App\Models\Model_Sumber;
 use App\Models\Model_JenisPublikasi;
 use App\Models\Model_Semester;
 use App\Exports\PenelitianExport;
+use App\Imports\PenelitianImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -251,8 +253,22 @@ class ControllerPenelitian extends Controller
 
     public function export()
     {
-        Excel::download(new PenelitianExport, "penelitian.xlsx");
-        Alert::success('Data Penelitian Telah Diexport!');
+        return Excel::download(new PenelitianExport, "penelitian.xlsx");
+    }
+
+    public function import_form()
+    {
+       
+        return view('DaftarPenelitian.import');
+    }
+    public function import(Request $request)
+    {
+        $file = $request->file('import_file');
+        $nameFile = $file->getClientOriginalName();
+        $file->move('DataPenelitian', $nameFile);
+
+        Excel::import(new PenelitianImport, public_path('/DataPenelitian/'.$nameFile));
+        Alert::success('Data Penelitian Berhasil Diimport!');
         return redirect()->route('Penelitian.index');
     }
 }

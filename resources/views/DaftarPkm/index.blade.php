@@ -15,6 +15,8 @@
             <div class="card-header">
               <h4>Daftar PKM</h4>
               <div class="card-header-action">
+                <a href="{{ route('PkmImportForm') }}" class="btn btn-success">Import Data</a>
+                <a href="{{ route('PkmExport') }}" class="btn btn-danger">Export Data</a>
                 <a href="{{ route('Pengabdian-Masyarakat.create') }}" class="btn btn-primary">Tambah Data<i class="fas fa-plus"></i></a>
               </div>
             </div>

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Model_Pkm;
 use App\Models\Model_Sumber;
 use App\Models\Model_Mitra;
+use App\Exports\PkmExport;
+use App\Imports\PkmImport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -220,6 +224,27 @@ class ControllerPkm extends Controller
         }
         $delete->delete();
         Alert::success('Data PKM Berhasil Dihapus!');
+        return redirect()->route('Pengabdian-Masyarakat.index');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PkmExport, "pengabdian-masyarakat.xlsx");
+    }
+
+    public function import_form()
+    {
+       
+        return view('DaftarPkm.import');
+    }
+    public function import(Request $request)
+    {
+        $file = $request->file('import_file');
+        $nameFile = $file->getClientOriginalName();
+        $file->move('DataPkm', $nameFile);
+
+        Excel::import(new PkmImport, public_path('/DataPkm/'.$nameFile));
+        Alert::success('Data PKM Berhasil Diimport!');
         return redirect()->route('Pengabdian-Masyarakat.index');
     }
 }
