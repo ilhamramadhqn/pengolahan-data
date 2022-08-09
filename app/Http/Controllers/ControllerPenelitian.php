@@ -225,4 +225,25 @@ class ControllerPenelitian extends Controller
         Alert::success('Data Penelitian Berhasil Dihapus!');
         return redirect()->route('Penelitian.index');
     }
+
+    public function grafik_penelitian()
+    {
+        //
+        $total_penelitian = Model_Penelitian::join("semester", "penelitian.id_semester", "=", "semester.id_semester")
+        ->select(DB::raw("COUNT(penelitian.id_penelitian) as total_penelitian"))
+        ->groupBy("penelitian.id_penelitian")
+        ->pluck('total_penelitian');
+        
+        $semester = Model_Penelitian::join("semester", "penelitian.id_semester", "=", "semester.id_semester")
+        ->select("semester.nama_semester as semester")
+        ->groupBy("penelitian.id_penelitian")
+        ->orderBy("semester.id_semester", "ASC")
+        ->pluck('semester');
+        
+        $tot = Model_Penelitian::join("semester", "penelitian.id_semester", "=", "semester.id_semester")
+        ->select(DB::raw("COUNT(penelitian.id_penelitian) as total_penelitian"))
+        ->groupBy("penelitian.id_penelitian")
+        ->pluck('total_penelitian')->count();
+        return view('home',compact('total_penelitian', 'semester', 'tot'));
+    }
 }

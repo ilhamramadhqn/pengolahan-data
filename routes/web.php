@@ -42,9 +42,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', function ()    {
-        return view('home');
-    });
+    // Route::get('/home', function ()    {
+    //     return view('home');
+    // });
 
     //Kelola Pengguna
     Route::resource('/Data-Admin', ControllerPengguna::class);
@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/Jurnal', ControllerJurnal::class);
     Route::patch('/Jurnal/{id_jurnal}/acc', 'App\Http\Controllers\ControllerJurnal@accept');
     Route::patch('/Jurnal/{id_jurnal}/dec', 'App\Http\Controllers\ControllerJurnal@decline');
+    Route::get('/home', 'App\Http\Controllers\ControllerPenelitian@grafik_penelitian');
 
     Route::resource('/Jenis-HKI', ControllerJenisHKI::class);
 
