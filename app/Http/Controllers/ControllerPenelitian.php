@@ -6,6 +6,8 @@ use App\Models\Model_Penelitian;
 use App\Models\Model_Sumber;
 use App\Models\Model_JenisPublikasi;
 use App\Models\Model_Semester;
+use App\Exports\PenelitianExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -245,5 +247,12 @@ class ControllerPenelitian extends Controller
         ->groupBy("penelitian.id_penelitian")
         ->pluck('total_penelitian')->count();
         return view('home',compact('total_penelitian', 'semester', 'tot'));
+    }
+
+    public function export()
+    {
+        Excel::download(new PenelitianExport, "penelitian.xlsx");
+        Alert::success('Data Penelitian Telah Diexport!');
+        return redirect()->route('Penelitian.index');
     }
 }

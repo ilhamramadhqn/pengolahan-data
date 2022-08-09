@@ -15,6 +15,8 @@
             <div class="card-header">
               <h4>Daftar Penelitian</h4>
               <div class="card-header-action">
+                <a href="{{ route('Penelitian.import') }}" class="btn btn-success">Import Data</a>
+                <a href="{{ route('PenelitianExport') }}" class="btn btn-danger">Export Data</a>
                 <a href="{{ route('Penelitian.create') }}" class="btn btn-primary">Tambah Data<i class="fas fa-plus"></i></a>
               </div>
             </div>

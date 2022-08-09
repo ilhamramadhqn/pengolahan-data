@@ -86,6 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/Penelitian', ControllerPenelitian::class);
     Route::patch('/Penelitian/{id_penelitian}/acc', 'App\Http\Controllers\ControllerPenelitian@accept');
     Route::patch('/Penelitian/{id_penelitian}/dec', 'App\Http\Controllers\ControllerPenelitian@decline');
+    Route::get('/Penelitian/import', 'App\Http\Controllers\ControllerPenelitian@import')->name('Penelitian.import');
+    Route::get('/PenelitianExport', 'App\Http\Controllers\ControllerPenelitian@export')->name('PenelitianExport');
     Route::resource('/Pengabdian-Masyarakat', ControllerPkm::class);
     Route::patch('//Pengabdian-Masyarakat/{id_pkm}/acc', 'App\Http\Controllers\ControllerPkm@accept');
     Route::patch('//Pengabdian-Masyarakat/{id_pkm}/dec', 'App\Http\Controllers\ControllerPkm@decline');
