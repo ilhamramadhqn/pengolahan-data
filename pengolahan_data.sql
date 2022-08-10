@@ -11,7 +11,7 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 08/08/2022 11:25:29
+ Date: 10/08/2022 19:49:58
 */
 
 SET NAMES utf8mb4;
@@ -480,7 +480,7 @@ CREATE TABLE `penelitian` (
   CONSTRAINT `penelitian_ibfk_1` FOREIGN KEY (`id_jenis_penelitian`) REFERENCES `jenis_penelitian` (`id_jenis_penelitian`),
   CONSTRAINT `penelitian_ibfk_2` FOREIGN KEY (`id_semester`) REFERENCES `semester` (`id_semester`),
   CONSTRAINT `penelitian_ibfk_3` FOREIGN KEY (`id_sumber`) REFERENCES `dana` (`id_sumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of penelitian
@@ -488,6 +488,8 @@ CREATE TABLE `penelitian` (
 BEGIN;
 INSERT INTO `penelitian` VALUES (1, 2, 1, 11, 'PERBANDINGAN ALGORITMA KLASIFIKASI DATA MINING PADA PENELUSURAN POTENSI MINAT CALON MAHASISWA BARU', 2021, NULL, NULL, 'P', NULL, NULL);
 INSERT INTO `penelitian` VALUES (2, 2, 2, 2, 'TEST PENELITIAN', 2021, NULL, NULL, 'P', '2022-08-07 08:08:56', '2022-08-07 10:51:36');
+INSERT INTO `penelitian` VALUES (6, 2, 1, 11, 'PERBANDINGAN ALGORITMA KLASIFIKASI DATA MINING PADA PENELUSURAN POTENSI MINAT CALON MAHASISWA BARU', 2021, NULL, NULL, 'P', '2022-08-09 12:57:14', '2022-08-09 12:57:14');
+INSERT INTO `penelitian` VALUES (7, 2, 2, 2, 'TEST PENELITIAN', 2021, NULL, NULL, 'P', '2022-08-09 12:57:14', '2022-08-09 12:57:14');
 COMMIT;
 
 -- ----------------------------
@@ -559,13 +561,20 @@ CREATE TABLE `pkm` (
   KEY `FK_RELATIONSHIP_14` (`id_sumber`),
   CONSTRAINT `pkm_ibfk_1` FOREIGN KEY (`id_mitra`) REFERENCES `mitra` (`id_mitra`),
   CONSTRAINT `pkm_ibfk_2` FOREIGN KEY (`id_sumber`) REFERENCES `dana` (`id_sumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pkm
 -- ----------------------------
 BEGIN;
 INSERT INTO `pkm` VALUES (1, 1, 1, 'Pelatihan Microsoft Office 2016 Bagi Guru TK Anggota IGTKI Kota Bandung Gelombang 1 Kelompok B', '2022-08-08', '2022-08-10', NULL, NULL, 'P', NULL, NULL);
+INSERT INTO `pkm` VALUES (6, 1, 1, 'Pelatihan Microsoft Office 2016 Bagi Guru TK Anggota IGTKI Kota Bandung Gelombang 1 Kelompok B', '2022-08-08', '2022-08-10', NULL, NULL, 'P', '2022-08-09 13:11:45', '2022-08-09 13:11:45');
+INSERT INTO `pkm` VALUES (7, 1, 1, 'Test1', '2022-08-08', '2022-08-10', NULL, NULL, 'P', '2022-08-09 13:11:45', '2022-08-09 13:11:45');
+INSERT INTO `pkm` VALUES (8, 1, 1, 'Test2', '2022-08-08', '2022-08-10', NULL, NULL, 'P', '2022-08-09 13:11:45', '2022-08-09 13:11:45');
+INSERT INTO `pkm` VALUES (9, 1, 1, 'Test3', '2022-08-08', '2022-08-10', NULL, NULL, 'P', '2022-08-09 13:11:45', '2022-08-09 13:11:45');
+INSERT INTO `pkm` VALUES (10, 1, 1, 'Test4', '2022-08-08', '2022-08-10', NULL, NULL, 'P', '2022-08-09 13:11:45', '2022-08-09 13:11:45');
+INSERT INTO `pkm` VALUES (11, 1, 1, 'Test5', '2022-08-08', '2022-08-10', NULL, NULL, 'P', '2022-08-09 13:11:45', '2022-08-09 13:11:45');
+INSERT INTO `pkm` VALUES (12, 1, 1, 'Test6', '2022-08-08', '2022-08-10', NULL, NULL, 'P', '2022-08-09 13:11:45', '2022-08-09 13:11:45');
 COMMIT;
 
 -- ----------------------------

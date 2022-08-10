@@ -14,7 +14,7 @@
               <h4>Import Data Penelitian</h4>
             </div>
             <div class="card-body p-0">
-              <form method="post" action="{{ route('PkmImport') }}" enctype="multipart/form-data">
+              <form method="post" action="{{ route('PenelitianImport') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                   <div class="form-group">

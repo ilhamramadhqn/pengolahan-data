@@ -26,7 +26,7 @@
                   </div>
                 </div>
                 <div class="card-footer text-right">
-                  <a href="/Penelitian" class="btn btn-danger">Back</a>
+                  <a href="/Pengabdian-Masyarakat" class="btn btn-danger">Back</a>
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </form>

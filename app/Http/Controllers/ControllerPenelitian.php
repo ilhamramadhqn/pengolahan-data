@@ -234,7 +234,7 @@ class ControllerPenelitian extends Controller
     {
         //
         $total_penelitian = Model_Penelitian::join("semester", "penelitian.id_semester", "=", "semester.id_semester")
-        ->select(DB::raw("COUNT(penelitian.id_penelitian) as total_penelitian"))
+        ->select(DB::raw("COUNT(Distinct penelitian.id_penelitian) as total_penelitian")) //tambahin distinc
         ->groupBy("penelitian.id_penelitian")
         ->pluck('total_penelitian');
         
@@ -258,7 +258,6 @@ class ControllerPenelitian extends Controller
 
     public function import_form()
     {
-       
         return view('DaftarPenelitian.import');
     }
     public function import(Request $request)
