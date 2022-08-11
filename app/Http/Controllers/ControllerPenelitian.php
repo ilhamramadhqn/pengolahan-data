@@ -58,7 +58,7 @@ class ControllerPenelitian extends Controller
             'id_jenis_penelitian' => 'required',
             'id_semester' => 'required',
             'judul_penelitian' => 'required',
-            'tahun' => 'required',
+            'tahun' => '',
             'file_proposal' => 'mimes:doc,docx,pdf',
             'file_laporan_akhir' => 'mimes:doc,docx,pdf',
         ]);  
@@ -148,7 +148,7 @@ class ControllerPenelitian extends Controller
             'id_jenis_penelitian' => 'required',
             'id_semester' => 'required',
             'judul_penelitian' => 'required',
-            'tahun' => 'required',
+            'tahun' => '',
             'file_proposal' => 'mimes:doc,docx,pdf',
             'file_laporan_akhir' => 'mimes:doc,docx,pdf'
         ]);  
