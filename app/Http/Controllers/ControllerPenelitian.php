@@ -234,15 +234,14 @@ class ControllerPenelitian extends Controller
     {
         //
         $total_penelitian = Model_Penelitian::join("semester", "penelitian.id_semester", "=", "semester.id_semester")
-        ->select(DB::raw("COUNT(Distinct penelitian.id_penelitian) as total_penelitian")) //tambahin distinc
+        ->select('semester.nama_semester', DB::raw("COUNT(Distinct penelitian.id_semester) as total_penelitian"))->distinct()
         ->groupBy("penelitian.id_penelitian")
         ->pluck('total_penelitian');
         
         $semester = Model_Penelitian::join("semester", "penelitian.id_semester", "=", "semester.id_semester")
-        ->select("semester.nama_semester as semester")
+        ->select('semester.nama_semester',DB::raw("COUNT(Distinct penelitian.id_semester) as total_penelitian"))->distinct()
         ->groupBy("penelitian.id_penelitian")
-        ->orderBy("semester.id_semester", "ASC")
-        ->pluck('semester');
+        ->pluck('nama_semester');
         
         $tot = Model_Penelitian::join("semester", "penelitian.id_semester", "=", "semester.id_semester")
         ->select(DB::raw("COUNT(penelitian.id_penelitian) as total_penelitian"))
