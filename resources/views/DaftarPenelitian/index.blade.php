@@ -23,7 +23,7 @@
             <div class="col-md-12">
               <div class="card-body p-0">
                 <div class="table-responsive table-invoice">
-                  <table class="table table-striped">
+                  <table id="myTable" class="table table-striped">
                     <thead>
                       <tr>
                         <th>No</th>
@@ -107,6 +107,12 @@
       if(!confirm("Are You Sure to decline this"))
       event.preventDefault();
   }
+</script>
+<script>
+
+$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
 </script>
 
 </section>
