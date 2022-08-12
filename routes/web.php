@@ -47,25 +47,25 @@ Route::group(['middleware' => 'auth'], function () {
     // });
 
     //Kelola Pengguna
-    Route::resource('/Data-Admin', ControllerPengguna::class);
     Route::get('/Data-Admin', 'App\Http\Controllers\ControllerPengguna@data_admin')->name('Data-Admin.data_admin');
     Route::get('/Data-Admin/create', 'App\Http\Controllers\ControllerPengguna@create_admin');
     Route::post('/Data-Admin/store', 'App\Http\Controllers\ControllerPengguna@store_admin');
+    Route::get('/Data-Admin/{id}', 'App\Http\Controllers\ControllerPengguna@destroy_admin');
     
-    Route::resource('/Data-Dekan', ControllerPengguna::class);
     Route::get('/Data-Dekan', 'App\Http\Controllers\ControllerPengguna@data_dekan')->name('Data-Dekan.data_admin');
     Route::get('/Data-Dekan/create', 'App\Http\Controllers\ControllerPengguna@create_dekan');
     Route::post('/Data-Dekan/store', 'App\Http\Controllers\ControllerPengguna@store_dekan');
+    Route::get('/Data-Dekan/{id}', 'App\Http\Controllers\ControllerPengguna@destroy_dekan');
 
-    Route::resource('/Data-Dosen', ControllerPengguna::class);
     Route::get('/Data-Dosen', 'App\Http\Controllers\ControllerPengguna@data_dosen')->name('Data-Dosen.data_admin');
     Route::get('/Data-Dosen/create', 'App\Http\Controllers\ControllerPengguna@create_dosen');
     Route::post('/Data-Dosen/store', 'App\Http\Controllers\ControllerPengguna@store_dosen');
+    Route::get('/Data-Dosen/{id}', 'App\Http\Controllers\ControllerPengguna@destroy_dosen');
 
-    Route::resource('/Data-Mahasiswa', ControllerPengguna::class);
     Route::get('/Data-Mahasiswa', 'App\Http\Controllers\ControllerPengguna@data_mahasiswa')->name('Data-Mahasiswa.data_admin');
     Route::get('/Data-Mahasiswa/create', 'App\Http\Controllers\ControllerPengguna@create_mahasiswa');
     Route::post('/Data-Mahasiswa/store', 'App\Http\Controllers\ControllerPengguna@store_mahasiswa');
+    Route::get('/Data-Mahasiswa/{id}', 'App\Http\Controllers\ControllerPengguna@destroy_mahasiswa');
     
  
     Route::resource('/Mitra', ControllerMitra::class);
@@ -89,7 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/PenelitianImport', 'App\Http\Controllers\ControllerPenelitian@import')->name('PenelitianImport');
     Route::get('/PenelitianImportForm', 'App\Http\Controllers\ControllerPenelitian@import_form')->name('PenelitianImportForm');
     Route::get('/PenelitianExport', 'App\Http\Controllers\ControllerPenelitian@export')->name('PenelitianExport');
-    
+
     Route::resource('/Pengabdian-Masyarakat', ControllerPkm::class);
     Route::patch('//Pengabdian-Masyarakat/{id_pkm}/acc', 'App\Http\Controllers\ControllerPkm@accept');
     Route::patch('//Pengabdian-Masyarakat/{id_pkm}/dec', 'App\Http\Controllers\ControllerPkm@decline');

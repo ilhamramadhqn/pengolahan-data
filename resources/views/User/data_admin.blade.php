@@ -39,11 +39,7 @@
                         <td>{{$d->name}}</td>
                         <td>{{$d->authority}}</td>
                         <td>
-                          <form action="{{ route('Data-'.$route.'.destroy', $d->id)}}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-icon btn-danger btn-sm" onclick="return AllertFunc();" type="submit"><i class="far fa-trash-alt text-white" data-feather="delete"></i></button>
-                          </form>
+                          <a href="Data-{{$route}}/{{$d->id}}" class="btn btn-icon btn-danger btn-sm" onclick="return AllertFunc();" type="submit"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>
                         </td>
                       </tr>
                     @endforeach

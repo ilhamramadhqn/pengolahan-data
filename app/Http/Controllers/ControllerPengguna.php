@@ -183,12 +183,29 @@ class ControllerPengguna extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+ 
+    public function destroy_dekan($id)
     {
         //
         $data = User::findOrFail($id);
         $data->delete();
         Alert::success('Data User Berhasil Dihapus!');
-        return redirect()->route('Data-Admin.data_admin');
+        return redirect()->route('Data-Dekan.data_admin');
+    }
+    public function destroy_dosen($id)
+    {
+        //
+        $data = User::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Dosen Berhasil Dihapus!');
+        return redirect()->route('Data-Dosen.data_admin');
+    }
+    public function destroy_mahasiswa($id)
+    {
+        //
+        $data = User::findOrFail($id);
+        $data->delete();
+        Alert::success('Data Mahasiswa Berhasil Dihapus!');
+        return redirect()->route('Data-Mahasiswa.data_admin');
     }
 }
